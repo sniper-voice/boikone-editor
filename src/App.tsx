@@ -5,12 +5,10 @@ import { Edit } from './Edit'
 export function App() {
     return (
         <>
-            <div className="w-full h-[calc(100vh-theme(space.96))]">
+            <div className="h-screen">
                 <Preview />
             </div>
-            <div className="w-96 h-96 mx-auto">
-                <Edit />
-            </div>
+            <Edit />
         </>
     )
 }
