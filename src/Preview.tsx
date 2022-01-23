@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { PreviewHeader } from './PreviewHeader'
 import { PreviewFooter } from './PreviewFooter'
 import { ScenarioText } from './lib/models'
@@ -8,12 +8,27 @@ type Props = {
 }
 
 export function Preview({ scenarioText }: Props) {
+    const scrollableRef = useRef<HTMLDivElement>(null)
+
     return (
         <div className="h-full overflow-hidden bg-slate-50 text-zinc-50">
             <div className="h-14">
                 <PreviewHeader />
             </div>
-            <div className="h-[calc(100%-theme(spacing.14)-theme(spacing.12))] bg-gray-900 flex flex-row-reverse px-6 pt-10 overflow-x-auto overflow-y-hidden">
+            <div
+                className="h-[calc(100%-theme(spacing.14)-theme(spacing.12))] bg-gray-900 flex flex-row-reverse px-6 pt-10 overflow-x-auto overflow-y-hidden"
+                onWheel={(event) => {
+                    if (!scrollableRef.current) {
+                        return
+                    }
+
+                    scrollableRef.current.scrollTo(
+                        scrollableRef.current.scrollLeft - event.deltaY * 0.5,
+                        scrollableRef.current.scrollTop
+                    )
+                }}
+                ref={scrollableRef}
+            >
                 {scenarioText
                     .map((words, wordsIndex) =>
                         words.lines.map((line, lineIndex) => (
