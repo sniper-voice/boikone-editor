@@ -13,7 +13,7 @@ export function Preview({ scenarioText }: Props) {
             <div className="h-14">
                 <PreviewHeader />
             </div>
-            <div className="h-[calc(100%-theme(spacing.14)-theme(spacing.9))] bg-gray-900 flex flex-row-reverse px-6 pt-10">
+            <div className="h-[calc(100%-theme(spacing.14)-theme(spacing.12))] bg-gray-900 flex flex-row-reverse px-6 pt-10">
                 {scenarioText
                     .map((words, wordsIndex) =>
                         words.lines.map((line, lineIndex) => (
