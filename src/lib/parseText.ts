@@ -30,7 +30,7 @@ export function parseText(text: string): ScenarioText {
                 if (result.prevCharacter === character) {
                     const previousWords = result.scenarioText.at(-1)
                     if (!previousWords) {
-                        throw 'lastWords are empty'
+                        throw Error('lastWords are empty')
                     }
                     previousWords.lines.push(line)
                 } else {
