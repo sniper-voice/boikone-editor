@@ -75,6 +75,20 @@ const fixtures = [
             },
         ],
     },
+    {
+        // Two successive sets of words but one contains no character
+        sourceText: `コウスケ：「ひろしみたいに憑りつかれた状態にボクが見える？　ボクは大丈夫だよ。
+ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」`,
+        scenarioText: [
+            {
+                character: 'コウスケ',
+                lines: [
+                    '「ひろしみたいに憑りつかれた状態にボクが見える？　ボクは大丈夫だよ。',
+                    'ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」',
+                ],
+            },
+        ],
+    },
 ]
 
 for (const { sourceText, scenarioText } of fixtures) {

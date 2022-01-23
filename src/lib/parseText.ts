@@ -16,18 +16,17 @@ export function parseText(text: string): ScenarioText {
         .filter((line) => {
             return line.length > 0
         })
-        .map<[string, string]>((line) => {
-            const [first, second] = line.split('：', 2)
-            if (second === undefined) {
-                // If it only has a single element, it's a stage direction
-                return ['0', first]
-            } else {
-                // Otherwize, it contains the name of a character and line
-                return [first, second]
-            }
-        })
         .reduce<ReduceResult>(
-            (result, [character, line]) => {
+            (result, characterAndLine) => {
+                const [first, second] = characterAndLine.split('：', 2)
+                const [character, line] =
+                    second === undefined
+                        ? // If it only has a single element, the character is derived from the previous line.
+                          // And if it's the first line of the text, it's a stage direction.
+                          [result.prevCharacter ?? '0', first]
+                        : // Otherwize, it contains the name of a character and line
+                          [first, second]
+
                 if (result.prevCharacter === character) {
                     const previousWords = result.scenarioText.at(-1)
                     if (!previousWords) {
