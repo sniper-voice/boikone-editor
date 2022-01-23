@@ -27,6 +27,7 @@ export function Preview({ scenarioText }: Props) {
                                     </div>
                                 ) : null}
                                 <p className="pt-9 ml-3 min-w-[theme(spacing.5)] leading-tight tracking-wide">
+                                    {words.character === '0' ? 'ー' : null}
                                     {line}
                                 </p>
                             </div>
