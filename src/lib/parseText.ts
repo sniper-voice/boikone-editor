@@ -27,6 +27,10 @@ export function parseText(text: string): ScenarioText {
                         : // Otherwize, it contains the name of a character and line
                           [first, second]
 
+                if (line === '') {
+                    return result
+                }
+
                 if (result.prevCharacter === character) {
                     const previousWords = result.scenarioText.at(-1)
                     if (!previousWords) {

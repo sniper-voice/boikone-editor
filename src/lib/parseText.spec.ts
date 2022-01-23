@@ -99,6 +99,19 @@ const fixtures = [
             },
         ],
     },
+    {
+        // Empty line
+        sourceText: `コウスケ：
+コウスケ：ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」`,
+        scenarioText: [
+            {
+                character: 'コウスケ',
+                lines: [
+                    'ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」',
+                ],
+            },
+        ],
+    },
 ]
 
 for (const { sourceText, scenarioText } of fixtures) {
