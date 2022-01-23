@@ -89,6 +89,16 @@ const fixtures = [
             },
         ],
     },
+    {
+        // The first line contains no character
+        sourceText: '部屋に入り、鍵をしめるふたり',
+        scenarioText: [
+            {
+                character: '0',
+                lines: ['部屋に入り、鍵をしめるふたり'],
+            },
+        ],
+    },
 ]
 
 for (const { sourceText, scenarioText } of fixtures) {
