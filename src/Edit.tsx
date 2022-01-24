@@ -11,6 +11,7 @@ export function Edit({ text, onChange }: Props) {
         <Draggable>
             <div className="w-96 h-96 absolute left-0 bottom-0">
                 <textarea
+                    aria-label="scenario-edit"
                     className="w-full h-full"
                     value={text}
                     onChange={(event) => {
