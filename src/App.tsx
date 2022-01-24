@@ -25,7 +25,7 @@ export function App() {
     const scenarioText = useMemo(() => parseText(text), [text])
     return (
         <>
-            <div className="h-screen">
+            <div className="h-screen overflow-hidden">
                 <Preview scenarioText={scenarioText} />
             </div>
             <Edit text={text} onChange={setText} />
