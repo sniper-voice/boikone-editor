@@ -1,5 +1,5 @@
 {
-    "name": "boikone-editor",
+    "name": "boikone-preview",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
