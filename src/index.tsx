@@ -4,7 +4,7 @@ import { getMany, set } from 'idb-keyval'
 import './index.css'
 import { App } from './components/App'
 
-const initialText = `0：薄暗い部屋に青白く光るキーボードとモニターに打鍵音が響き渡る
+const initialText = `0：薄暗い部屋に青白く光るキーボードとモニター。打鍵音が響き渡る
 男：ふっふっふ、ついに完成したのでスナ、名付けて「ボイコネプレビュー」
 助手：ボ、ボイコネプレビュー？これはいったいなんなのですか？
 助手：　
