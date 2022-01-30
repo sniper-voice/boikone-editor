@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { ScenarioText } from '../lib/models'
 import { PreviewHeader } from './PreviewHeader'
 import { PreviewFooter } from './PreviewFooter'
+import { Line } from './Line'
 
 type Props = {
     scenarioText: ScenarioText
@@ -33,20 +34,12 @@ export function Preview({ scenarioText }: Props) {
                 {scenarioText
                     .map((words, wordsIndex) =>
                         words.lines.map((line, lineIndex) => (
-                            <div
+                            <Line
                                 key={`${wordsIndex}-${lineIndex}`}
-                                className="h-auto max-h-[744px] break-words writing-mode-vertical"
-                            >
-                                {lineIndex === 0 && words.character !== '0' ? (
-                                    <div className="ml-3 font-bold leading-tight tracking-wide">
-                                        {words.character}
-                                    </div>
-                                ) : null}
-                                <p className="ml-3 min-w-[theme(spacing.5)] pt-9 leading-tight tracking-wide">
-                                    {words.character === '0' ? 'ー' : null}
-                                    {line}
-                                </p>
-                            </div>
+                                showCharacterName={lineIndex === 0}
+                                character={words.character}
+                                text={line}
+                            />
                         ))
                     )
                     .flat()}
