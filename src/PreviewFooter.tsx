@@ -2,7 +2,7 @@ import React from 'react'
 
 export function PreviewFooter() {
     return (
-        <div className="h-full bg-black text-sm text-gray-400 pr-3 flex items-center justify-end">
+        <div className="flex h-full items-center justify-end bg-black pr-3 text-sm text-gray-400">
             <span>
                 wwww.boikone-editor.com created by{' '}
                 <a

@@ -9,10 +9,10 @@ type Props = {
 export function Edit({ text, onChange }: Props) {
     return (
         <Draggable>
-            <div className="w-96 h-96 absolute left-0 bottom-0">
+            <div className="absolute left-0 bottom-0 h-96 w-96">
                 <textarea
                     aria-label="scenario-edit"
-                    className="w-full h-full"
+                    className="h-full w-full"
                     value={text}
                     onChange={(event) => {
                         onChange(event.target.value)

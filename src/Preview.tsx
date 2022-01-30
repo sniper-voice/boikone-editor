@@ -17,7 +17,7 @@ export function Preview({ scenarioText }: Props) {
             </div>
             <div
                 data-testid="preview-text"
-                className="h-[calc(100%-theme(spacing.14)-theme(spacing.12))] bg-gray-900 flex flex-row-reverse px-6 pt-10 overflow-x-auto overflow-y-hidden"
+                className="flex h-[calc(100%-theme(spacing.14)-theme(spacing.12))] flex-row-reverse overflow-x-auto overflow-y-hidden bg-gray-900 px-6 pt-10"
                 onWheel={(event) => {
                     if (!scrollableRef.current) {
                         return
@@ -35,14 +35,14 @@ export function Preview({ scenarioText }: Props) {
                         words.lines.map((line, lineIndex) => (
                             <div
                                 key={`${wordsIndex}-${lineIndex}`}
-                                className="writing-mode-vertical max-h-[744px] h-auto break-words"
+                                className="h-auto max-h-[744px] break-words writing-mode-vertical"
                             >
                                 {lineIndex === 0 && words.character !== '0' ? (
-                                    <div className="ml-3 leading-tight tracking-wide font-bold">
+                                    <div className="ml-3 font-bold leading-tight tracking-wide">
                                         {words.character}
                                     </div>
                                 ) : null}
-                                <p className="pt-9 ml-3 min-w-[theme(spacing.5)] leading-tight tracking-wide">
+                                <p className="ml-3 min-w-[theme(spacing.5)] pt-9 leading-tight tracking-wide">
                                     {words.character === '0' ? 'ー' : null}
                                     {line}
                                 </p>
