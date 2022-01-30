@@ -29,6 +29,11 @@ const initialText = `0：薄暗い部屋に青白く光るキーボードとモ�
 助手：よくわかりました。さっそくこれを使ってシナリオを書いてみたいと思います
 男：うむ。使い勝手に関するフィードバックや不具合報告などがあれば、 @sniper_voice に報告して欲しいのでスナ`
 
+// TODO: Unregister boikone-editor.com in the future
+if (window.location.host === 'www.boikone-editor.com') {
+    window.location.host = 'www.boikone-preview.com'
+}
+
 getMany(['text', 'position', 'size']).then(
     ([persistedText, persistedPosition, persistedSize]) => {
         const defaultState = {
