@@ -1,5 +1,5 @@
 import React from 'react'
-import Draggable from 'react-draggable'
+import { Rnd } from 'react-rnd'
 
 type Props = {
     text: string
@@ -8,17 +8,23 @@ type Props = {
 
 export function Edit({ text, onChange }: Props) {
     return (
-        <Draggable>
-            <div className="absolute left-0 bottom-0 h-96 w-96">
-                <textarea
-                    aria-label="scenario-edit"
-                    className="h-full w-full"
-                    value={text}
-                    onChange={(event) => {
-                        onChange(event.target.value)
-                    }}
-                ></textarea>
-            </div>
-        </Draggable>
+        <Rnd
+            default={{
+                x: 50,
+                y: 100,
+                width: 500,
+                height: 500,
+            }}
+            bounds="window"
+        >
+            <textarea
+                aria-label="scenario-edit"
+                className="h-full w-full"
+                value={text}
+                onChange={(event) => {
+                    onChange(event.target.value)
+                }}
+            ></textarea>
+        </Rnd>
     )
 }
