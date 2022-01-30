@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react'
+import { parseText } from '../lib/parseText'
 import { Preview } from './Preview'
 import { Edit } from './Edit'
-import { parseText } from './lib/parseText'
 
 const initialText = `0：部屋に入り、鍵をしめるふたり
 亜蘭：「（息が荒い）はあ、はあ、はあ、鍵をかけた。これで、時間が稼げる」

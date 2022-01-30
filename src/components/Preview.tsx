@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
+import { ScenarioText } from '../lib/models'
 import { PreviewHeader } from './PreviewHeader'
 import { PreviewFooter } from './PreviewFooter'
-import { ScenarioText } from './lib/models'
 
 type Props = {
     scenarioText: ScenarioText
