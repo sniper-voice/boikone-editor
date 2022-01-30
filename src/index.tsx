@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { get, set } from 'idb-keyval'
+import { getMany, set } from 'idb-keyval'
 import './index.css'
 import { App } from './components/App'
 
-const defaultText = `0：部屋に入り、鍵をしめるふたり
+const initialText = `0：部屋に入り、鍵をしめるふたり
 亜蘭：「（息が荒い）はあ、はあ、はあ、鍵をかけた。これで、時間が稼げる」
 コウスケ：「（息が荒い）良かった。......来たよ！」
 ひろし：「うぐ、うぐぐぐぐ、あけろ～、おおおおっ、ここを開けろおおおおおっ！！」
@@ -21,17 +21,52 @@ const defaultText = `0：部屋に入り、鍵をしめるふたり
 コウスケ：ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」
 `
 
-get('persistedText').then((persistedText) => {
-    const initialText = persistedText ?? defaultText
+getMany(['text', 'position', 'size']).then(
+    ([persistedText, persistedPosition, persistedSize]) => {
+        const defaultState = {
+            text: persistedText ?? initialText,
+            position: persistedPosition ?? {
+                x: 50,
+                y: 100,
+            },
+            size: persistedSize ?? {
+                width: 500,
+                height: 500,
+            },
+        }
 
-    const onTextChange = (text: string) => {
-        set('persistedText', text)
+        const onStateChange = (
+            payload:
+                | {
+                      type: 'text'
+                      value: string
+                  }
+                | {
+                      type: 'position'
+                      value: {
+                          x: number
+                          y: number
+                      }
+                  }
+                | {
+                      type: 'size'
+                      value: {
+                          width: number
+                          height: number
+                      }
+                  }
+        ) => {
+            set(payload.type, payload.value)
+        }
+
+        ReactDOM.render(
+            <React.StrictMode>
+                <App
+                    defaultState={defaultState}
+                    onStateChange={onStateChange}
+                />
+            </React.StrictMode>,
+            document.getElementById('root')
+        )
     }
-
-    ReactDOM.render(
-        <React.StrictMode>
-            <App initialText={initialText} onTextChange={onTextChange} />
-        </React.StrictMode>,
-        document.getElementById('root')
-    )
-})
+)

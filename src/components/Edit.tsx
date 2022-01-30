@@ -3,26 +3,39 @@ import { Rnd } from 'react-rnd'
 
 type Props = {
     text: string
-    onChange: (text: string) => void
+    defaultRect: {
+        x: number
+        y: number
+        width: number
+        height: number
+    }
+    onTextChange: (text: string) => void
+    onPositionChange: (x: number, y: number) => void
+    onSizeChange: (width: number, height: number) => void
 }
 
-export function Edit({ text, onChange }: Props) {
+export function Edit({
+    text,
+    defaultRect,
+    onTextChange,
+    onPositionChange,
+    onSizeChange,
+}: Props) {
     return (
         <Rnd
-            default={{
-                x: 50,
-                y: 100,
-                width: 500,
-                height: 500,
-            }}
+            default={defaultRect}
             bounds="window"
+            onDragStop={(_event, data) => onPositionChange(data.x, data.y)}
+            onResize={(_event, _direction, ref) => {
+                onSizeChange(ref.offsetWidth, ref.offsetHeight)
+            }}
         >
             <textarea
                 aria-label="scenario-edit"
                 className="h-full w-full"
                 value={text}
                 onChange={(event) => {
-                    onChange(event.target.value)
+                    onTextChange(event.target.value)
                 }}
             ></textarea>
         </Rnd>
