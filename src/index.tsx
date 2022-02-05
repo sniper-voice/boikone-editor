@@ -27,7 +27,7 @@ const initialText = `0：薄暗い部屋に青白く光るキーボードとモ�
 助手：クラウドに自動保存されたりとかはないんですか？
 男：現状はありません。あくまでシナリオテキストをプレビューするだけのシンプルなものでスナ
 助手：よくわかりました。さっそくこれを使ってシナリオを書いてみたいと思います
-男：うむ。使い勝手に関するフィードバックや不具合報告などがあれば、 @sniper_voice に報告して欲しいのでスナ`
+男：うむ。使い勝手に関するフィードバックや不具合報告などがあれば、 @sniper_voice に知らせて欲しいのでスナ`
 
 // TODO: Unregister boikone-editor.com in the future
 if (window.location.host === 'www.boikone-editor.com') {
