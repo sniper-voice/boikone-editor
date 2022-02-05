@@ -4,3 +4,5 @@ export type Words = {
 }
 
 export type ScenarioText = Readonly<Words[]>
+
+export type CharacterCounts = Record<string, number>
