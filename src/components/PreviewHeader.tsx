@@ -1,9 +1,17 @@
 import React from 'react'
+import { ChartBarIcon } from '@heroicons/react/solid'
 
-export function PreviewHeader() {
+type Props = {
+    onStatClick: () => void
+}
+
+export function PreviewHeader({ onStatClick }: Props) {
     return (
-        <div className="flex h-full items-center bg-gradient-to-l from-fuchsia-800 to-indigo-800 pl-3">
-            <h1>ボイコネプレビュー</h1>
+        <div className="flex h-full items-center bg-gradient-to-l from-fuchsia-800 to-indigo-800 px-4">
+            <h1 className="grow">ボイコネプレビュー</h1>
+            <button onClick={() => onStatClick()}>
+                <ChartBarIcon className="h-5 w-5" />
+            </button>
         </div>
     )
 }

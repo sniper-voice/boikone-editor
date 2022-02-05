@@ -1,7 +1,8 @@
-import React, { useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import { ScenarioText } from '../lib/models'
 import { PreviewHeader } from './PreviewHeader'
 import { PreviewFooter } from './PreviewFooter'
+import { Stats } from './Stats'
 import { Line } from './Line'
 
 type Props = {
@@ -9,12 +10,20 @@ type Props = {
 }
 
 export function Preview({ scenarioText }: Props) {
+    const [showStats, setShowStats] = useState<boolean>(false)
     const scrollableRef = useRef<HTMLDivElement>(null)
 
     return (
-        <div className="h-full overflow-hidden bg-slate-50 text-zinc-50">
+        <div className="relative h-full overflow-hidden bg-slate-50 text-zinc-50">
+            <div
+                className={`absolute right-2 top-16 ${
+                    showStats ? 'visible' : 'invisible'
+                }`}
+            >
+                <Stats scenarioText={scenarioText} />
+            </div>
             <div className="h-14">
-                <PreviewHeader />
+                <PreviewHeader onStatClick={() => setShowStats(!showStats)} />
             </div>
             <div
                 data-testid="preview-text"
