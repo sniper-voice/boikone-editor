@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { ScenarioText } from '../lib/models'
 import { PreviewHeader } from './PreviewHeader'
 import { PreviewFooter } from './PreviewFooter'
@@ -12,6 +12,18 @@ type Props = {
 export function Preview({ scenarioText }: Props) {
     const [showStats, setShowStats] = useState<boolean>(false)
     const scrollableRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const handleDocumentClick = () => {
+            if (showStats) {
+                setShowStats(false)
+            }
+        }
+        document.addEventListener('click', handleDocumentClick)
+        return () => {
+            document.removeEventListener('click', handleDocumentClick)
+        }
+    }, [showStats])
 
     return (
         <div className="relative h-full overflow-hidden bg-slate-50 text-zinc-50">
