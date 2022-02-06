@@ -1,25 +1,15 @@
-import React, { useMemo } from 'react'
-import { ScenarioText } from '../lib/models'
-import { countCharacters } from '../lib/countCharacters'
-import { aggregateCountByCharacter } from '../lib/aggregateCountByCharacter'
+import React from 'react'
+import { CountByCharacter } from '../lib/models'
 
 type Props = {
-    scenarioText: ScenarioText
+    countByCharacter: CountByCharacter
 }
 
-export function Stats({ scenarioText }: Props) {
-    const characterCounts = useMemo(
-        () => countCharacters(scenarioText),
-        [scenarioText]
+export function Stats({ countByCharacter }: Props) {
+    const entries = Object.entries(countByCharacter).sort(
+        (lhs, rhs) => rhs[1] - lhs[1]
     )
-    const countByCharacters = useMemo(
-        () =>
-            Object.entries(aggregateCountByCharacter(characterCounts)).sort(
-                (lhs, rhs) => rhs[1] - lhs[1]
-            ),
-        [characterCounts]
-    )
-    const counts = countByCharacters.map(([character, count]) => count)
+    const counts = entries.map(([character, count]) => count)
     const maxCount = Math.max(...counts)
     const totalCount = counts.reduce((acc, count) => acc + count, 0)
     const barColors = [
@@ -40,7 +30,7 @@ export function Stats({ scenarioText }: Props) {
             <span className="text-xl">{totalCount}</span>
             <span className="ml-1 text-xs">文字</span>
             <ul>
-                {countByCharacters.map(([character, count], index) => (
+                {entries.map(([character, count], index) => (
                     <li
                         key={character}
                         title={`${count}文字`}

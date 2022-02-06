@@ -1,5 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { ScenarioText } from '../lib/models'
+import { countCharacters } from '../lib/countCharacters'
+import { aggregateCountByCharacter } from '../lib/aggregateCountByCharacter'
 import { PreviewHeader } from './PreviewHeader'
 import { PreviewFooter } from './PreviewFooter'
 import { Stats } from './Stats'
@@ -12,6 +14,14 @@ type Props = {
 export function Preview({ scenarioText }: Props) {
     const [showStats, setShowStats] = useState<boolean>(false)
     const scrollableRef = useRef<HTMLDivElement>(null)
+    const characterCounts = useMemo(
+        () => countCharacters(scenarioText),
+        [scenarioText]
+    )
+    const countByCharacter = useMemo(
+        () => aggregateCountByCharacter(characterCounts),
+        [characterCounts]
+    )
 
     useEffect(() => {
         const handleDocumentClick = () => {
@@ -32,7 +42,7 @@ export function Preview({ scenarioText }: Props) {
                     showStats ? 'visible' : 'invisible'
                 }`}
             >
-                <Stats scenarioText={scenarioText} />
+                <Stats countByCharacter={countByCharacter} />
             </div>
             <div className="h-14">
                 <PreviewHeader onStatClick={() => setShowStats(!showStats)} />
