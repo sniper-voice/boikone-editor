@@ -75,16 +75,16 @@ export function Preview({ scenarioText }: Props) {
             </div>
             <div className="h-14">
                 <PreviewHeader onStatClick={() => setShowStats(!showStats)} />
-                <div className="flex flex-row-reverse">
-                    {characterCounts.map(({ character, count }, index) => (
-                        <div
-                            key={index}
-                            title={character === '0' ? 'ト書' : character}
-                            className={`h-2 ${barColorByCharacter[character]}`}
-                            style={{ flexGrow: count }}
-                        ></div>
-                    ))}
-                </div>
+            </div>
+            <div className="flex flex-row-reverse">
+                {characterCounts.map(({ character, count }, index) => (
+                    <div
+                        key={index}
+                        title={character === '0' ? 'ト書' : character}
+                        className={`h-2 ${barColorByCharacter[character]}`}
+                        style={{ flexGrow: count }}
+                    ></div>
+                ))}
             </div>
             <div
                 data-testid="preview-text"
