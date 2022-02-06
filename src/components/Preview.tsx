@@ -18,12 +18,12 @@ export function Preview({ scenarioText }: Props) {
         () => countCharacters(scenarioText),
         [scenarioText]
     )
-    const countByCharacter = useMemo(
-        () => aggregateCountByCharacter(characterCounts),
+    const charactersSortedByCount = useMemo(
+        () =>
+            Object.entries(aggregateCountByCharacter(characterCounts)).sort(
+                (lhs, rhs) => rhs[1] - lhs[1]
+            ),
         [characterCounts]
-    )
-    const charactersSortByCount = Object.entries(countByCharacter).sort(
-        (lhs, rhs) => rhs[1] - lhs[1]
     )
     const barColors = [
         'bg-red-500',
@@ -37,13 +37,19 @@ export function Preview({ scenarioText }: Props) {
         'bg-cyan-700',
         'bg-purple-700',
     ]
-    const entries = charactersSortByCount.map(([character, count]) => ({
-        character,
-        count,
-        barColor:
+    const barColorByCharacter = charactersSortedByCount.reduce<
+        Record<string, string>
+    >((table, [character]) => {
+        table[character] =
             character === '0'
                 ? 'bg-gray-300'
-                : barColors.shift() ?? 'bg-gray-500',
+                : barColors.shift() ?? 'bg-gray-500'
+        return table
+    }, {})
+    const entries = charactersSortedByCount.map(([character, count]) => ({
+        character,
+        count,
+        barColor: barColorByCharacter[character],
     }))
 
     useEffect(() => {
@@ -69,6 +75,16 @@ export function Preview({ scenarioText }: Props) {
             </div>
             <div className="h-14">
                 <PreviewHeader onStatClick={() => setShowStats(!showStats)} />
+                <div className="flex flex-row-reverse">
+                    {characterCounts.map(({ character, count }, index) => (
+                        <div
+                            key={index}
+                            title={character === '0' ? 'ト書' : character}
+                            className={`h-2 ${barColorByCharacter[character]}`}
+                            style={{ flexGrow: count }}
+                        ></div>
+                    ))}
+                </div>
             </div>
             <div
                 data-testid="preview-text"

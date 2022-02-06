@@ -1,5 +1,4 @@
 import React from 'react'
-import { CountByCharacter } from '../lib/models'
 
 type Props = {
     entries: Readonly<
