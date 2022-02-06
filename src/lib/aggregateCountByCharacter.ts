@@ -1,22 +1,17 @@
-import { ScenarioText, CountByCharacter } from './models'
+import { CharacterCounts, CountByCharacter } from './models'
 
 export function aggregateCountByCharacter(
-    scenarioText: ScenarioText
+    characterCounts: CharacterCounts
 ): CountByCharacter {
     const countByCharacter: {
         [character: string]: number
     } = {}
 
-    for (const words of scenarioText) {
-        const count = words.lines.reduce((acc, line) => {
-            // Count length as code points instead of code units
-            return acc + Array.from(line).length
-        }, 0)
-
-        if (countByCharacter[words.character] === undefined) {
-            countByCharacter[words.character] = count
+    for (const { character, count } of characterCounts) {
+        if (countByCharacter[character] === undefined) {
+            countByCharacter[character] = count
         } else {
-            countByCharacter[words.character] += count
+            countByCharacter[character] += count
         }
     }
 
