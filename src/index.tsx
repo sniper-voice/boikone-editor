@@ -83,3 +83,16 @@ getMany(['text', 'position', 'size']).then(
         )
     }
 )
+
+declare global {
+    var resetBoikonePreview: () => void
+}
+window.resetBoikonePreview = async () => {
+    await set('text', initialText)
+    await set('position', { x: 50, y: 100 })
+    await set('size', {
+        width: 500,
+        height: 500,
+    })
+    window.location.reload()
+}
