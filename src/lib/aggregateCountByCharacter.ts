@@ -1,6 +1,8 @@
-import { ScenarioText, CharacterCounts } from './models'
+import { ScenarioText, CountByCharacter } from './models'
 
-export function countCharacters(scenarioText: ScenarioText): CharacterCounts {
+export function aggregateCountByCharacter(
+    scenarioText: ScenarioText
+): CountByCharacter {
     const countByCharacter: {
         [character: string]: number
     } = {}

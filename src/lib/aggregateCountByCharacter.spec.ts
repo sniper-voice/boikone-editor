@@ -1,9 +1,9 @@
-import { countCharacters } from './countCharacters'
+import { aggregateCountByCharacter } from './aggregateCountByCharacter'
 
 const fixtures = [
     {
         scenarioText: [],
-        characterCounts: {},
+        countByCharacter: {},
     },
     {
         scenarioText: [
@@ -24,7 +24,7 @@ const fixtures = [
                 lines: ['それはつまり'],
             },
         ],
-        characterCounts: {
+        countByCharacter: {
             レディ: 8,
             ピエロ: 13,
             エリート: 9,
@@ -38,14 +38,16 @@ const fixtures = [
                 lines: ['😀😃😄😁🤩'],
             },
         ],
-        characterCounts: {
+        countByCharacter: {
             スナイパー: 5,
         },
     },
 ] as const
 
-for (const { scenarioText, characterCounts } of fixtures) {
+for (const { scenarioText, countByCharacter } of fixtures) {
     test('countCharacters returns the amount of words by character', () => {
-        expect(countCharacters(scenarioText)).toMatchObject(characterCounts)
+        expect(aggregateCountByCharacter(scenarioText)).toMatchObject(
+            countByCharacter
+        )
     })
 }

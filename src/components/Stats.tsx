@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { ScenarioText } from '../lib/models'
-import { countCharacters } from '../lib/countCharacters'
+import { aggregateCountByCharacter } from '../lib/aggregateCountByCharacter'
 
 type Props = {
     scenarioText: ScenarioText
@@ -9,7 +9,7 @@ type Props = {
 export function Stats({ scenarioText }: Props) {
     const characterCounts = useMemo(
         () =>
-            Object.entries(countCharacters(scenarioText)).sort(
+            Object.entries(aggregateCountByCharacter(scenarioText)).sort(
                 (lhs, rhs) => rhs[1] - lhs[1]
             ),
         [scenarioText]
