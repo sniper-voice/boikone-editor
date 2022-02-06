@@ -22,6 +22,29 @@ export function Preview({ scenarioText }: Props) {
         () => aggregateCountByCharacter(characterCounts),
         [characterCounts]
     )
+    const charactersSortByCount = Object.entries(countByCharacter).sort(
+        (lhs, rhs) => rhs[1] - lhs[1]
+    )
+    const barColors = [
+        'bg-red-500',
+        'bg-orange-500',
+        'bg-lime-500',
+        'bg-cyan-500',
+        'bg-purple-500',
+        'bg-red-700',
+        'bg-orange-700',
+        'bg-lime-700',
+        'bg-cyan-700',
+        'bg-purple-700',
+    ]
+    const entries = charactersSortByCount.map(([character, count]) => ({
+        character,
+        count,
+        barColor:
+            character === '0'
+                ? 'bg-gray-300'
+                : barColors.shift() ?? 'bg-gray-500',
+    }))
 
     useEffect(() => {
         const handleDocumentClick = () => {
@@ -42,7 +65,7 @@ export function Preview({ scenarioText }: Props) {
                     showStats ? 'visible' : 'invisible'
                 }`}
             >
-                <Stats countByCharacter={countByCharacter} />
+                <Stats entries={entries} />
             </div>
             <div className="h-14">
                 <PreviewHeader onStatClick={() => setShowStats(!showStats)} />
