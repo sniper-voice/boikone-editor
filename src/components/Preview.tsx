@@ -27,15 +27,15 @@ export function Preview({ scenarioText }: Props) {
     )
     const barColors = [
         'bg-red-500',
-        'bg-orange-500',
-        'bg-lime-500',
+        'bg-yellow-300',
         'bg-cyan-500',
         'bg-purple-500',
+        'bg-lime-500',
         'bg-red-700',
-        'bg-orange-700',
-        'bg-lime-700',
+        'bg-yellow-700',
         'bg-cyan-700',
         'bg-purple-700',
+        'bg-lime-700',
     ]
     const barColorByCharacter = charactersSortedByCount.reduce<
         Record<string, string>
