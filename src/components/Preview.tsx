@@ -85,7 +85,7 @@ export function Preview({ scenarioText }: Props) {
             </div>
             <div
                 data-testid="preview-text"
-                className="flex h-[calc(100%-theme(spacing.14)-theme(spacing.12))] flex-row-reverse overflow-x-auto overflow-y-hidden bg-gray-900 px-6 pt-10"
+                className="flex h-[calc(100%-theme(spacing.14)-theme(spacing.2)-theme(spacing.12))] flex-row-reverse overflow-x-auto overflow-y-hidden bg-gray-900 px-6 pt-10"
                 onWheel={(event) => {
                     if (!scrollableRef.current) {
                         return
