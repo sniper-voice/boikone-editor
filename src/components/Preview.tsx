@@ -5,6 +5,7 @@ import { aggregateCountByCharacter } from '../lib/aggregateCountByCharacter'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { Stats } from './Stats'
+import { WordsDistribution } from './WordsDistribution'
 import { Line } from './Line'
 
 type Props = {
@@ -76,15 +77,11 @@ export function Preview({ scenarioText }: Props) {
             <div className="h-14">
                 <Header onStatClick={() => setShowStats(!showStats)} />
             </div>
-            <div className="flex flex-row-reverse">
-                {characterCounts.map(({ character, count }, index) => (
-                    <div
-                        key={index}
-                        title={character === '0' ? 'ト書' : character}
-                        className={`h-2 ${barColorByCharacter[character]}`}
-                        style={{ flexGrow: count }}
-                    ></div>
-                ))}
+            <div className="h-2 ">
+                <WordsDistribution
+                    characterCounts={characterCounts}
+                    barColorByCharacter={barColorByCharacter}
+                />
             </div>
             <div
                 data-testid="preview-text"
