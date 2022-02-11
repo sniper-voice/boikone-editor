@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function PreviewFooter() {
+export function Footer() {
     return (
         <div className="flex h-full items-center justify-end bg-black pr-3 text-sm text-gray-400">
             <span>

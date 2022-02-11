@@ -3,7 +3,7 @@ import { ScenarioText } from '../lib/models'
 import { countCharacters } from '../lib/countCharacters'
 import { aggregateCountByCharacter } from '../lib/aggregateCountByCharacter'
 import { PreviewHeader } from './PreviewHeader'
-import { PreviewFooter } from './PreviewFooter'
+import { Footer } from './Footer'
 import { Stats } from './Stats'
 import { Line } from './Line'
 
@@ -115,7 +115,7 @@ export function Preview({ scenarioText }: Props) {
                     .flat()}
             </div>
             <div className="h-12">
-                <PreviewFooter />
+                <Footer />
             </div>
         </div>
     )
