@@ -7,8 +7,6 @@ test('It renders text when the value of textarea is changed', () => {
         <App
             defaultState={{
                 text: '',
-                position: { x: 0, y: 0 },
-                size: { width: 100, height: 100 },
             }}
             onStateChange={() => {}}
         />

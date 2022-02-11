@@ -34,65 +34,27 @@ if (window.location.host === 'www.boikone-editor.com') {
     window.location.host = 'www.boikone-preview.com'
 }
 
-getMany(['text', 'position', 'size']).then(
-    ([persistedText, persistedPosition, persistedSize]) => {
-        const defaultState = {
-            text: persistedText ?? initialText,
-            position: persistedPosition ?? {
-                x: 50,
-                y: 100,
-            },
-            size: persistedSize ?? {
-                width: 500,
-                height: 500,
-            },
-        }
-
-        const onStateChange = (
-            payload:
-                | {
-                      type: 'text'
-                      value: string
-                  }
-                | {
-                      type: 'position'
-                      value: {
-                          x: number
-                          y: number
-                      }
-                  }
-                | {
-                      type: 'size'
-                      value: {
-                          width: number
-                          height: number
-                      }
-                  }
-        ) => {
-            set(payload.type, payload.value)
-        }
-
-        ReactDOM.render(
-            <React.StrictMode>
-                <App
-                    defaultState={defaultState}
-                    onStateChange={onStateChange}
-                />
-            </React.StrictMode>,
-            document.getElementById('root')
-        )
+getMany(['text']).then(([persistedText, persistedPosition, persistedSize]) => {
+    const defaultState = {
+        text: persistedText ?? initialText,
     }
-)
+
+    const onStateChange = (payload: { type: 'text'; value: string }) => {
+        set(payload.type, payload.value)
+    }
+
+    ReactDOM.render(
+        <React.StrictMode>
+            <App defaultState={defaultState} onStateChange={onStateChange} />
+        </React.StrictMode>,
+        document.getElementById('root')
+    )
+})
 
 declare global {
     var resetBoikonePreview: () => void
 }
 window.resetBoikonePreview = async () => {
     await set('text', initialText)
-    await set('position', { x: 50, y: 100 })
-    await set('size', {
-        width: 500,
-        height: 500,
-    })
     window.location.reload()
 }

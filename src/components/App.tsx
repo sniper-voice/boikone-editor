@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
+import { Split } from '@geoffcox/react-splitter'
 import { parseText } from '../lib/parseText'
 import { countCharacters } from '../lib/countCharacters'
 import { aggregateCountByCharacter } from '../lib/aggregateCountByCharacter'
@@ -12,36 +13,8 @@ import { WordsDistribution } from './WordsDistribution'
 type Props = {
     defaultState: {
         text: string
-        position: {
-            x: number
-            y: number
-        }
-        size: {
-            width: number
-            height: number
-        }
     }
-    onStateChange: (
-        payload:
-            | {
-                  type: 'text'
-                  value: string
-              }
-            | {
-                  type: 'position'
-                  value: {
-                      x: number
-                      y: number
-                  }
-              }
-            | {
-                  type: 'size'
-                  value: {
-                      width: number
-                      height: number
-                  }
-              }
-    ) => void
+    onStateChange: (payload: { type: 'text'; value: string }) => void
 }
 
 export function App({ defaultState, onStateChange }: Props) {
@@ -100,58 +73,42 @@ export function App({ defaultState, onStateChange }: Props) {
 
     return (
         <>
-            <div className="h-screen overflow-hidden">
-                <div className="relative h-full overflow-hidden bg-slate-50 text-zinc-50">
-                    <div
-                        className={`absolute right-2 top-16 ${
-                            showStats ? 'visible' : 'invisible'
-                        }`}
-                    >
-                        <Stats entries={entries} />
-                    </div>
-                    <div className="h-14">
-                        <Header onStatClick={() => setShowStats(!showStats)} />
-                    </div>
-                    <div className="h-2">
-                        <WordsDistribution
-                            characterCounts={characterCounts}
-                            barColorByCharacter={barColorByCharacter}
+            <div className="relative h-screen overflow-hidden overflow-hidden bg-slate-50 text-zinc-50">
+                <div
+                    className={`absolute right-2 top-16 ${
+                        showStats ? 'visible' : 'invisible'
+                    }`}
+                >
+                    <Stats entries={entries} />
+                </div>
+                <div className="h-14">
+                    <Header onStatClick={() => setShowStats(!showStats)} />
+                </div>
+                <div className="h-2">
+                    <WordsDistribution
+                        characterCounts={characterCounts}
+                        barColorByCharacter={barColorByCharacter}
+                    />
+                </div>
+                <div className="h-[calc(100%-theme(spacing.14)-theme(spacing.2)-theme(spacing.12))]">
+                    <Split initialPrimarySize="40%">
+                        <Edit
+                            text={text}
+                            onTextChange={(text) => {
+                                setText(text)
+                                onStateChange({
+                                    type: 'text',
+                                    value: text,
+                                })
+                            }}
                         />
-                    </div>
-                    <div className="h-[calc(100%-theme(spacing.14)-theme(spacing.2)-theme(spacing.12))]">
                         <Preview scenarioText={scenarioText} />
-                    </div>
-                    <div className="h-12">
-                        <Footer />
-                    </div>
+                    </Split>
+                </div>
+                <div className="h-12">
+                    <Footer />
                 </div>
             </div>
-            <Edit
-                defaultRect={{
-                    ...defaultState.position,
-                    ...defaultState.size,
-                }}
-                text={text}
-                onTextChange={(text) => {
-                    setText(text)
-                    onStateChange({
-                        type: 'text',
-                        value: text,
-                    })
-                }}
-                onPositionChange={(x, y) =>
-                    onStateChange({
-                        type: 'position',
-                        value: { x, y },
-                    })
-                }
-                onSizeChange={(width, height) =>
-                    onStateChange({
-                        type: 'size',
-                        value: { width, height },
-                    })
-                }
-            />
         </>
     )
 }
