@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { ScenarioText } from '../lib/models'
 import { countCharacters } from '../lib/countCharacters'
 import { aggregateCountByCharacter } from '../lib/aggregateCountByCharacter'
-import { PreviewHeader } from './PreviewHeader'
+import { Header } from './Header'
 import { Footer } from './Footer'
 import { Stats } from './Stats'
 import { Line } from './Line'
@@ -74,7 +74,7 @@ export function Preview({ scenarioText }: Props) {
                 <Stats entries={entries} />
             </div>
             <div className="h-14">
-                <PreviewHeader onStatClick={() => setShowStats(!showStats)} />
+                <Header onStatClick={() => setShowStats(!showStats)} />
             </div>
             <div className="flex flex-row-reverse">
                 {characterCounts.map(({ character, count }, index) => (
