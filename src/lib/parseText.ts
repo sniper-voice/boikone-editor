@@ -13,6 +13,7 @@ type ReduceResult = {
 export function parseText(text: string): ScenarioText {
     const result = text
         .split('\n')
+        // Empty lines are just ignored on Boikone
         .filter((line) => {
             return line.length > 0
         })
