@@ -74,40 +74,38 @@ export function App({ defaultState, onStateChange }: Props) {
     return (
         <>
             <div className="relative h-screen overflow-hidden overflow-hidden bg-slate-50 text-zinc-50">
-                <div
-                    className={`absolute right-2 top-16 ${
-                        showStats ? 'visible' : 'invisible'
-                    }`}
-                >
-                    <Stats entries={entries} />
-                </div>
-                <div className="h-14">
-                    <Header onStatClick={() => setShowStats(!showStats)} />
-                </div>
-                <div className="h-2">
-                    <WordsDistribution
-                        characterCounts={characterCounts}
-                        barColorByCharacter={barColorByCharacter}
-                    />
-                </div>
-                <div className="h-[calc(100%-theme(spacing.14)-theme(spacing.2)-theme(spacing.12))]">
-                    <Split initialPrimarySize="40%">
-                        <Edit
-                            text={text}
-                            onTextChange={(text) => {
-                                setText(text)
-                                onStateChange({
-                                    type: 'text',
-                                    value: text,
-                                })
-                            }}
-                        />
-                        <Preview scenarioText={scenarioText} />
-                    </Split>
-                </div>
-                <div className="h-12">
-                    <Footer />
-                </div>
+                <Split initialPrimarySize="40%">
+                    <div className="relative h-full">
+                        <div
+                            className={`absolute right-2 top-16 ${
+                                showStats ? 'visible' : 'invisible'
+                            }`}
+                        >
+                            <Stats entries={entries} />
+                        </div>
+                        <div className="h-14">
+                            <Header
+                                onStatClick={() => setShowStats(!showStats)}
+                            />
+                        </div>
+                        <div className="h-[calc(100%-theme(spacing.14)-theme(spacing.12))]">
+                            <Edit
+                                text={text}
+                                onTextChange={(text) => {
+                                    setText(text)
+                                    onStateChange({
+                                        type: 'text',
+                                        value: text,
+                                    })
+                                }}
+                            />
+                        </div>
+                        <div className="h-12">
+                            <Footer />
+                        </div>
+                    </div>
+                    <Preview scenarioText={scenarioText} />
+                </Split>
             </div>
         </>
     )
