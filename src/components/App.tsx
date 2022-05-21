@@ -73,7 +73,7 @@ export function App({ defaultState, onStateChange }: Props) {
 
     return (
         <>
-            <div className="relative h-screen overflow-hidden overflow-hidden bg-slate-50 text-zinc-50">
+            <div className="relative h-screen overflow-hidden bg-slate-50 text-zinc-50">
                 <Split initialPrimarySize="40%">
                     <div className="relative h-full">
                         <div

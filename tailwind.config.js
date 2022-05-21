@@ -1,7 +1,11 @@
 module.exports = {
     content: ['./src/**/*.{ts,tsx}', './public/index.html'],
     theme: {
-        extend: {},
+        extend: {
+            borderWidth: {
+                3: '3px',
+            },
+        },
     },
     plugins: [
         require('tailwindcss-writing-mode')({

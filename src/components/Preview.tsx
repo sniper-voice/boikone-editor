@@ -7,36 +7,29 @@ type Props = {
 }
 
 export function Preview({ scenarioText }: Props) {
-    const scrollableRef = useRef<HTMLDivElement>(null)
-
     return (
-        <div
-            data-testid="preview-text"
-            className="flex h-full flex-row-reverse overflow-x-auto overflow-y-hidden bg-gray-900 px-6 pt-10"
-            onWheel={(event) => {
-                if (!scrollableRef.current) {
-                    return
-                }
-
-                scrollableRef.current.scrollTo(
-                    scrollableRef.current.scrollLeft - event.deltaY * 0.5,
-                    scrollableRef.current.scrollTop
-                )
-            }}
-            ref={scrollableRef}
-        >
-            {scenarioText
-                .map((words, wordsIndex) =>
-                    words.lines.map((line, lineIndex) => (
-                        <Line
-                            key={`${wordsIndex}-${lineIndex}`}
-                            showCharacterName={lineIndex === 0}
-                            character={words.character}
-                            text={line}
-                        />
-                    ))
-                )
-                .flat()}
+        <div className="flex h-full items-center justify-center bg-slate-900">
+            <div
+                data-testid="preview-text"
+                className="flex h-[794px] w-[394px] items-center justify-center rounded-[50px] border-3 border-zinc-50 bg-slate-900"
+            >
+                <div className="relative h-[666px] w-[375px] bg-[url('./images/boikone-preview-bg.jpg')] bg-[length:100%_auto] bg-no-repeat">
+                    <div className="pointer-events-none absolute h-[666px] w-[375px] bg-slate-900/50"></div>
+                    <div className="absolute h-full w-[375px] overflow-y-auto overflow-x-hidden pt-6">
+                        {scenarioText
+                            .map((words, wordsIndex) =>
+                                words.lines.map((line, lineIndex) => (
+                                    <Line
+                                        key={`${wordsIndex}-${lineIndex}`}
+                                        character={words.character}
+                                        text={line}
+                                    />
+                                ))
+                            )
+                            .flat()}
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
