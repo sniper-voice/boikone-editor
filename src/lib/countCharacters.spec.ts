@@ -1,4 +1,5 @@
 import { countCharacters } from './countCharacters'
+import { ErrorRange } from './models'
 
 const fixtures = [
     {
@@ -8,20 +9,52 @@ const fixtures = [
     {
         scenarioText: [
             {
-                character: 'ピエロ',
-                lines: ['なんなんだろうねぇこの状況'],
+                type: 'dialogue',
+                character: {
+                    str: 'ピエロ',
+                    hankakuErrors: [],
+                },
+                text: {
+                    str: 'なんなんだろうねぇこの状況',
+                    countOverErrors: [],
+                    hankakuErrors: [],
+                },
             },
             {
-                character: 'レディ',
-                lines: ['綺麗な四つどもえ'],
+                type: 'dialogue',
+                character: {
+                    str: 'レディ',
+                    hankakuErrors: [],
+                },
+                text: {
+                    str: '綺麗な四つどもえ',
+                    countOverErrors: [],
+                    hankakuErrors: [],
+                },
             },
             {
-                character: 'エリート',
-                lines: ['その前に一ついいか'],
+                type: 'dialogue',
+                character: {
+                    str: 'エリート',
+                    hankakuErrors: [],
+                },
+                text: {
+                    str: 'その前に一ついいか',
+                    countOverErrors: [],
+                    hankakuErrors: [],
+                },
             },
             {
-                character: 'ガール',
-                lines: ['それはつまり'],
+                type: 'dialogue',
+                character: {
+                    str: 'ガール',
+                    hankakuErrors: [],
+                },
+                text: {
+                    str: 'それはつまり',
+                    countOverErrors: [],
+                    hankakuErrors: [],
+                },
             },
         ],
         characterCounts: [
@@ -46,25 +79,16 @@ const fixtures = [
     {
         scenarioText: [
             {
-                character: '助手',
-                lines: [
-                    '作業効率爆上がり・・・(ゴクリ',
-                    'す、すごいじゃないですか！',
-                ],
-            },
-        ],
-        characterCounts: [
-            {
-                character: '助手',
-                count: 28,
-            },
-        ],
-    },
-    {
-        scenarioText: [
-            {
-                character: 'スナイパー',
-                lines: ['😀😃😄😁🤩'],
+                type: 'dialogue',
+                character: {
+                    str: 'スナイパー',
+                    hankakuErrors: [],
+                },
+                text: {
+                    str: '😀😃😄😁🤩',
+                    countOverErrors: [],
+                    hankakuErrors: [],
+                },
             },
         ],
         characterCounts: [

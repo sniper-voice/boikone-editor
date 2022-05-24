@@ -16,17 +16,9 @@ export function Preview({ scenarioText }: Props) {
                 <div className="relative h-[666px] w-[375px] bg-[url('./images/boikone-preview-bg.jpg')] bg-[length:100%_auto] bg-no-repeat">
                     <div className="pointer-events-none absolute h-[666px] w-[375px] bg-slate-900/50"></div>
                     <div className="absolute h-full w-[375px] overflow-y-auto overflow-x-hidden pt-6">
-                        {scenarioText
-                            .map((words, wordsIndex) =>
-                                words.lines.map((line, lineIndex) => (
-                                    <Line
-                                        key={`${wordsIndex}-${lineIndex}`}
-                                        character={words.character}
-                                        text={line}
-                                    />
-                                ))
-                            )
-                            .flat()}
+                        {scenarioText.map((line, lineIndex) => (
+                            <Line key={lineIndex} line={line} />
+                        ))}
                     </div>
                 </div>
             </div>

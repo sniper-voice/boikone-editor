@@ -1,11 +1,18 @@
-import { ScenarioText, CharacterCounts } from './models'
+import {
+    ScenarioText,
+    CharacterCounts,
+    NarrativeLine,
+    DialogueLine,
+} from './models'
 
 export function countCharacters(scenarioText: ScenarioText): CharacterCounts {
-    return scenarioText.map(({ character, lines }) => ({
-        character,
-        count: lines.reduce((acc, line) => {
-            // Count length as code points instead of code units
-            return acc + Array.from(line).length
-        }, 0),
-    }))
+    return scenarioText
+        .filter(
+            (line): line is NarrativeLine | DialogueLine =>
+                line.type === 'dialogue' || line.type === 'narrative'
+        )
+        .map((line) => ({
+            character: line.type === 'narrative' ? '0' : line.character.str,
+            count: Array.from(line.text.str).length,
+        }))
 }

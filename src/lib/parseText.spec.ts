@@ -6,8 +6,12 @@ const fixtures = [
         sourceText: '0：部屋に入り、鍵をしめるふたり',
         scenarioText: [
             {
-                character: '0',
-                lines: ['部屋に入り、鍵をしめるふたり'],
+                type: 'narrative',
+                text: {
+                    str: '部屋に入り、鍵をしめるふたり',
+                    countOverErrors: [],
+                    hankakuErrors: [],
+                },
             },
         ],
     },
@@ -17,47 +21,24 @@ const fixtures = [
 亜蘭：「（息が荒い）はあ、はあ、はあ、鍵をかけた。これで、時間が稼げる」`,
         scenarioText: [
             {
-                character: '0',
-                lines: ['部屋に入り、鍵をしめるふたり'],
+                type: 'narrative',
+                text: {
+                    str: '部屋に入り、鍵をしめるふたり',
+                    countOverErrors: [],
+                    hankakuErrors: [],
+                },
             },
             {
-                character: '亜蘭',
-                lines: [
-                    '「（息が荒い）はあ、はあ、はあ、鍵をかけた。これで、時間が稼げる」',
-                ],
-            },
-        ],
-    },
-    {
-        // Two successive sets of words for the same character
-        sourceText: `コウスケ：「ひろしみたいに憑りつかれた状態にボクが見える？　ボクは大丈夫だよ。
-コウスケ：ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」`,
-        scenarioText: [
-            {
-                character: 'コウスケ',
-                lines: [
-                    '「ひろしみたいに憑りつかれた状態にボクが見える？　ボクは大丈夫だよ。',
-                    'ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」',
-                ],
-            },
-        ],
-    },
-    {
-        // Text contains empty lines
-        sourceText: `亜蘭：「（息が荒い）はあ、はあ、はあ、鍵をかけた。これで、時間が稼げる」
-
-
-コウスケ：「（息が荒い）良かった。......来たよ！」`,
-        scenarioText: [
-            {
-                character: '亜蘭',
-                lines: [
-                    '「（息が荒い）はあ、はあ、はあ、鍵をかけた。これで、時間が稼げる」',
-                ],
-            },
-            {
-                character: 'コウスケ',
-                lines: ['「（息が荒い）良かった。......来たよ！」'],
+                type: 'dialogue',
+                character: {
+                    str: '亜蘭',
+                    hankakuErrors: [],
+                },
+                text: {
+                    str: '「（息が荒い）はあ、はあ、はあ、鍵をかけた。これで、時間が稼げる」',
+                    countOverErrors: [],
+                    hankakuErrors: [],
+                },
             },
         ],
     },
@@ -67,11 +48,28 @@ const fixtures = [
 コウスケ：ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」`,
         scenarioText: [
             {
-                character: 'コウスケ',
-                lines: [
-                    '「ひろしみたいに憑りつかれた状態にボクが見える？　ボクは大丈夫だよ。',
-                    'ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」',
-                ],
+                type: 'dialogue',
+                character: {
+                    str: 'コウスケ',
+                    hankakuErrors: [],
+                },
+                text: {
+                    str: '「ひろしみたいに憑りつかれた状態にボクが見える？　ボクは大丈夫だよ。',
+                    countOverErrors: [],
+                    hankakuErrors: [],
+                },
+            },
+            {
+                type: 'dialogue',
+                character: {
+                    str: 'コウスケ',
+                    hankakuErrors: [],
+                },
+                text: {
+                    str: 'ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」',
+                    countOverErrors: [],
+                    hankakuErrors: [],
+                },
             },
         ],
     },
@@ -81,11 +79,29 @@ const fixtures = [
 ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」`,
         scenarioText: [
             {
-                character: 'コウスケ',
-                lines: [
-                    '「ひろしみたいに憑りつかれた状態にボクが見える？　ボクは大丈夫だよ。',
-                    'ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」',
-                ],
+                type: 'dialogue',
+                character: {
+                    str: 'コウスケ',
+                    hankakuErrors: [],
+                },
+                text: {
+                    str: '「ひろしみたいに憑りつかれた状態にボクが見える？　ボクは大丈夫だよ。',
+                    countOverErrors: [],
+                    hankakuErrors: [],
+                },
+            },
+            {
+                type: 'no_colon',
+                text: {
+                    str: 'ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」',
+                    noColonErrors: [
+                        {
+                            position: 0,
+                            length: 45,
+                        },
+                    ],
+                    hankakuErrors: [],
+                },
             },
         ],
     },
@@ -94,8 +110,17 @@ const fixtures = [
         sourceText: '部屋に入り、鍵をしめるふたり',
         scenarioText: [
             {
-                character: '0',
-                lines: ['部屋に入り、鍵をしめるふたり'],
+                type: 'no_colon',
+                text: {
+                    str: '部屋に入り、鍵をしめるふたり',
+                    noColonErrors: [
+                        {
+                            position: 0,
+                            length: 14,
+                        },
+                    ],
+                    hankakuErrors: [],
+                },
             },
         ],
     },
@@ -105,10 +130,15 @@ const fixtures = [
 コウスケ：ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」`,
         scenarioText: [
             {
-                character: 'コウスケ',
-                lines: [
-                    'ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」',
-                ],
+                character: {
+                    str: 'コウスケ',
+                    hankakuErrors: [],
+                },
+                text: {
+                    str: 'ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」',
+                    countOverErrors: [],
+                    hankakuErrors: [],
+                },
             },
         ],
     },

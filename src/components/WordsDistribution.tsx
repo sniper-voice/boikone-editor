@@ -15,8 +15,12 @@ export function WordsDistribution({
             {characterCounts.map(({ character, count }, index) => (
                 <div
                     key={index}
-                    title={character === '0' ? 'ト書' : character}
-                    className={`h-2 ${barColorByCharacter[character]}`}
+                    title={character === null ? 'ト書' : character}
+                    className={`h-2 ${
+                        character === null
+                            ? 'bg-gray-300'
+                            : barColorByCharacter[character]
+                    }`}
                     style={{ flexGrow: count }}
                 ></div>
             ))}
