@@ -130,6 +130,7 @@ const fixtures = [
 コウスケ：ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」`,
         scenarioText: [
             {
+                type: 'dialogue',
                 character: {
                     str: 'コウスケ',
                     hankakuErrors: [],
@@ -137,6 +138,29 @@ const fixtures = [
                 text: {
                     str: 'ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」',
                     countOverErrors: [],
+                    hankakuErrors: [],
+                },
+            },
+        ],
+    },
+    {
+        // Line over 100 characters
+        sourceText: `コウスケ：あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ超過`,
+        scenarioText: [
+            {
+                type: 'dialogue',
+                character: {
+                    str: 'コウスケ',
+                    hankakuErrors: [],
+                },
+                text: {
+                    str: 'あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ超過',
+                    countOverErrors: [
+                        {
+                            position: 100,
+                            length: 2,
+                        },
+                    ],
                     hankakuErrors: [],
                 },
             },

@@ -95,12 +95,22 @@ export function parseText(text: string): ScenarioText {
                     case 'narrative':
                         return {
                             ...line,
-                            countOverErrors: testCharacterCount(line.text.str),
+                            text: {
+                                ...line.text,
+                                countOverErrors: testCharacterCount(
+                                    line.text.str
+                                ),
+                            },
                         }
                     case 'dialogue':
                         return {
                             ...line,
-                            countOverErrors: testCharacterCount(line.text.str),
+                            text: {
+                                ...line.text,
+                                countOverErrors: testCharacterCount(
+                                    line.text.str
+                                ),
+                            },
                         }
                 }
 
