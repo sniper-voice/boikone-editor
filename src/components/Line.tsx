@@ -81,13 +81,13 @@ function markupTextWithTypeAndCountOverError({
 
     if (countOverErrors.length > 0) {
         result.push(
-            <span key="last">
+            <span key="last-valid">
                 {str.substring(lastPosition, countOverErrors[0].position)}
             </span>
         )
         result.push(
             <span
-                key="last"
+                key="last-invalid"
                 className="text-red-500"
                 title="100文字を越えています"
             >
@@ -97,7 +97,7 @@ function markupTextWithTypeAndCountOverError({
             </span>
         )
     } else {
-        result.push(<span key="last">{str.substr(lastPosition)}</span>)
+        result.push(<span key="last-valid">{str.substr(lastPosition)}</span>)
     }
 
     return result
