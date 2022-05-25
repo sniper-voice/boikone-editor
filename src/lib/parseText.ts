@@ -99,7 +99,7 @@ export function parseText(text: string): ScenarioText {
                             character: {
                                 ...line.character,
                                 characterTypeErrors: testCharacterType(
-                                    line.text.str
+                                    line.character.str
                                 ),
                             },
                             text: {

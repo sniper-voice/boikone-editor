@@ -169,7 +169,7 @@ const fixtures = [
     {
         // Character type validation
         sourceText: `0：部😀屋に入り、鍵をしめるふたり
-亜😀蘭：「😀（息が荒い）はあ、はあ、はあ、鍵をかけた。これで、時間が稼げる」`,
+亜😀蘭：「（息が荒😀い）はあ、はあ、はあ、鍵をかけた。これで、時間が稼げる」`,
         scenarioText: [
             {
                 type: 'narrative',
@@ -196,11 +196,11 @@ const fixtures = [
                     ],
                 },
                 text: {
-                    str: '「😀（息が荒い）はあ、はあ、はあ、鍵をかけた。これで、時間が稼げる」',
+                    str: '「（息が荒😀い）はあ、はあ、はあ、鍵をかけた。これで、時間が稼げる」',
                     countOverErrors: [],
                     characterTypeErrors: [
                         {
-                            position: 1,
+                            position: 5,
                             length: 2,
                         },
                     ],
