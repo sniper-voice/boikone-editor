@@ -128,7 +128,16 @@ export function Line({ line }: Props) {
                 </Container>
             )
         case 'no_colon':
-            return <Container>error</Container>
+            return (
+                <Container>
+                    <div className="relative clear-right mx-5 my-2 w-[335px] bg-red-500/50 p-2 text-center text-sm leading-normal text-white">
+                        {markupTextWithTypeError(line.text)}
+                        <div className="text-[11px] text-red-300">
+                            要全角コロン
+                        </div>
+                    </div>
+                </Container>
+            )
     }
 
     throw Error('unrecognized line type')
