@@ -1,4 +1,6 @@
-import { ScenarioText, Line, ErrorRange } from './models'
+import { ScenarioText, Line } from './models'
+import { testCharacterCount } from './testCharacterCount'
+import { testCharacterType } from './testCharacterType'
 
 type ReduceResult = {
     prevCharacter: string | null
@@ -18,7 +20,7 @@ function splitLine(rawLine: string): Line {
                         length: first.length,
                     },
                 ],
-                hankakuErrors: [],
+                characterTypeErrors: [],
             },
         }
     }
@@ -28,7 +30,7 @@ function splitLine(rawLine: string): Line {
             type: 'narrative',
             text: {
                 str: second,
-                hankakuErrors: [],
+                characterTypeErrors: [],
                 countOverErrors: [],
             },
         }
@@ -38,36 +40,14 @@ function splitLine(rawLine: string): Line {
         type: 'dialogue',
         character: {
             str: first,
-            hankakuErrors: [],
+            characterTypeErrors: [],
         },
         text: {
             str: second,
-            hankakuErrors: [],
+            characterTypeErrors: [],
             countOverErrors: [],
         },
     }
-}
-
-function testCharacterCount(text: string): ErrorRange[] {
-    // Convert the array of code unit to the arrya of characters
-    const characters = Array.from(text)
-    if (characters.length > 100) {
-        const leftPart = characters.slice(0, 100).join('')
-        return [
-            {
-                position: leftPart.length,
-                length: text.length - leftPart.length,
-            },
-        ]
-    }
-
-    return []
-}
-
-function testCharacterType(text: string): ErrorRange[] {
-    const asciiSymbols = /[ -/:-@[-~a-zA-Z]*/g
-
-    return []
 }
 
 export function parseText(text: string): ScenarioText {
@@ -91,7 +71,15 @@ export function parseText(text: string): ScenarioText {
             .map((line) => {
                 switch (line.type) {
                     case 'no_colon':
-                        return line
+                        return {
+                            ...line,
+                            text: {
+                                ...line.text,
+                                characterTypeErrors: testCharacterType(
+                                    line.text.str
+                                ),
+                            },
+                        }
                     case 'narrative':
                         return {
                             ...line,
@@ -100,14 +88,26 @@ export function parseText(text: string): ScenarioText {
                                 countOverErrors: testCharacterCount(
                                     line.text.str
                                 ),
+                                characterTypeErrors: testCharacterType(
+                                    line.text.str
+                                ),
                             },
                         }
                     case 'dialogue':
                         return {
                             ...line,
+                            character: {
+                                ...line.character,
+                                characterTypeErrors: testCharacterType(
+                                    line.text.str
+                                ),
+                            },
                             text: {
                                 ...line.text,
                                 countOverErrors: testCharacterCount(
+                                    line.text.str
+                                ),
+                                characterTypeErrors: testCharacterType(
                                     line.text.str
                                 ),
                             },

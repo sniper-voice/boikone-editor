@@ -9,12 +9,12 @@ export type DialogueLine = ReadonlyDeep<{
     type: 'dialogue'
     character: {
         str: string
-        hankakuErrors: ErrorRange[]
+        characterTypeErrors: ErrorRange[]
     }
     text: {
         str: string
         countOverErrors: ErrorRange[]
-        hankakuErrors: ErrorRange[]
+        characterTypeErrors: ErrorRange[]
     }
 }>
 
@@ -23,7 +23,7 @@ export type NarrativeLine = ReadonlyDeep<{
     text: {
         str: string
         countOverErrors: ErrorRange[]
-        hankakuErrors: ErrorRange[]
+        characterTypeErrors: ErrorRange[]
     }
 }>
 
@@ -32,7 +32,7 @@ export type NoColonLine = ReadonlyDeep<{
     text: {
         str: string
         noColonErrors: ErrorRange[]
-        hankakuErrors: ErrorRange[]
+        characterTypeErrors: ErrorRange[]
     }
 }>
 

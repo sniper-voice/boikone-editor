@@ -10,7 +10,7 @@ const fixtures = [
                 text: {
                     str: '部屋に入り、鍵をしめるふたり',
                     countOverErrors: [],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
             },
         ],
@@ -25,19 +25,19 @@ const fixtures = [
                 text: {
                     str: '部屋に入り、鍵をしめるふたり',
                     countOverErrors: [],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
             },
             {
                 type: 'dialogue',
                 character: {
                     str: '亜蘭',
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
                 text: {
                     str: '「（息が荒い）はあ、はあ、はあ、鍵をかけた。これで、時間が稼げる」',
                     countOverErrors: [],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
             },
         ],
@@ -51,24 +51,24 @@ const fixtures = [
                 type: 'dialogue',
                 character: {
                     str: 'コウスケ',
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
                 text: {
                     str: '「ひろしみたいに憑りつかれた状態にボクが見える？　ボクは大丈夫だよ。',
                     countOverErrors: [],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
             },
             {
                 type: 'dialogue',
                 character: {
                     str: 'コウスケ',
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
                 text: {
                     str: 'ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」',
                     countOverErrors: [],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
             },
         ],
@@ -82,12 +82,12 @@ const fixtures = [
                 type: 'dialogue',
                 character: {
                     str: 'コウスケ',
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
                 text: {
                     str: '「ひろしみたいに憑りつかれた状態にボクが見える？　ボクは大丈夫だよ。',
                     countOverErrors: [],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
             },
             {
@@ -100,7 +100,7 @@ const fixtures = [
                             length: 45,
                         },
                     ],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
             },
         ],
@@ -119,7 +119,7 @@ const fixtures = [
                             length: 14,
                         },
                     ],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
             },
         ],
@@ -133,12 +133,12 @@ const fixtures = [
                 type: 'dialogue',
                 character: {
                     str: 'コウスケ',
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
                 text: {
                     str: 'ちゃんとボクのままだ。それよりも、今あるものが見えた。これ、きっと少女の最期に見た記憶だ」',
                     countOverErrors: [],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
             },
         ],
@@ -151,7 +151,7 @@ const fixtures = [
                 type: 'dialogue',
                 character: {
                     str: 'コウスケ',
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
                 text: {
                     str: 'あいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこあいうえおかきくけこ超過',
@@ -161,7 +161,49 @@ const fixtures = [
                             length: 2,
                         },
                     ],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
+                },
+            },
+        ],
+    },
+    {
+        // Character type validation
+        sourceText: `0：部😀屋に入り、鍵をしめるふたり
+亜😀蘭：「😀（息が荒い）はあ、はあ、はあ、鍵をかけた。これで、時間が稼げる」`,
+        scenarioText: [
+            {
+                type: 'narrative',
+                text: {
+                    str: '部😀屋に入り、鍵をしめるふたり',
+                    countOverErrors: [],
+                    characterTypeErrors: [
+                        {
+                            position: 1,
+                            length: 2,
+                        },
+                    ],
+                },
+            },
+            {
+                type: 'dialogue',
+                character: {
+                    str: '亜😀蘭',
+                    characterTypeErrors: [
+                        {
+                            position: 1,
+                            length: 2,
+                        },
+                    ],
+                },
+                text: {
+                    str: '「😀（息が荒い）はあ、はあ、はあ、鍵をかけた。これで、時間が稼げる」',
+                    countOverErrors: [],
+                    characterTypeErrors: [
+                        {
+                            position: 1,
+                            length: 2,
+                        },
+                    ],
                 },
             },
         ],

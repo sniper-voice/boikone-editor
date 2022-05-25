@@ -12,48 +12,48 @@ const fixtures = [
                 type: 'dialogue',
                 character: {
                     str: 'ピエロ',
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
                 text: {
                     str: 'なんなんだろうねぇこの状況',
                     countOverErrors: [],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
             },
             {
                 type: 'dialogue',
                 character: {
                     str: 'レディ',
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
                 text: {
                     str: '綺麗な四つどもえ',
                     countOverErrors: [],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
             },
             {
                 type: 'dialogue',
                 character: {
                     str: 'エリート',
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
                 text: {
                     str: 'その前に一ついいか',
                     countOverErrors: [],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
             },
             {
                 type: 'dialogue',
                 character: {
                     str: 'ガール',
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
                 text: {
                     str: 'それはつまり',
                     countOverErrors: [],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
             },
         ],
@@ -82,12 +82,12 @@ const fixtures = [
                 type: 'dialogue',
                 character: {
                     str: 'スナイパー',
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
                 text: {
                     str: '😀😃😄😁🤩',
                     countOverErrors: [],
-                    hankakuErrors: [],
+                    characterTypeErrors: [],
                 },
             },
         ],
