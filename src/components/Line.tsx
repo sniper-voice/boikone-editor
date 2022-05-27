@@ -30,9 +30,9 @@ function markupTextWithTypeError({
             <span
                 key={`lastPosition-invalid`}
                 className="text-red-500"
-                title="ボイコネではこの文字は使えません"
+                title="この文字は使えません"
             >
-                {str.substr(error.position, error.length)}
+                {str.substr(error.position, error.length).replaceAll(' ', '■')}
             </span>
         )
         lastPosition = error.position + error.length
@@ -74,7 +74,7 @@ function markupTextWithTypeAndCountOverError({
                 className="text-red-500"
                 title="この文字は使えません"
             >
-                {str.substr(error.position, error.length)}
+                {str.substr(error.position, error.length).replaceAll(' ', '■')}
             </span>
         )
         lastPosition = error.position + error.length
