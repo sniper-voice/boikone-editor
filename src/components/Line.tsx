@@ -3,6 +3,7 @@ import { Line as LineData, ErrorRange } from '../lib/models'
 
 type Props = {
     line: LineData
+    cursorPosition: number | null
 }
 
 function Container({ children }: { children: React.ReactNode }) {
@@ -63,13 +64,13 @@ function markupTextWithTypeAndCountOverError({
         }
 
         result.push(
-            <span key={`lastPosition-valid`}>
+            <span key={`${lastPosition}-valid`}>
                 {str.substring(lastPosition, error.position)}
             </span>
         )
         result.push(
             <span
-                key={`lastPosition-invalid`}
+                key={`${lastPosition}-invalid`}
                 className="text-red-500"
                 title="この文字は使えません"
             >
@@ -103,7 +104,7 @@ function markupTextWithTypeAndCountOverError({
     return result
 }
 
-export function Line({ line }: Props) {
+export function Line({ line, cursorPosition }: Props) {
     switch (line.type) {
         case 'narrative':
             return (
@@ -130,12 +131,20 @@ export function Line({ line }: Props) {
         case 'no_colon':
             return (
                 <Container>
-                    <div className="relative clear-right mx-5 my-2 w-[335px] bg-red-500/50 p-2 text-center text-sm leading-normal text-white">
-                        {markupTextWithTypeError(line.text)}
-                        <div className="text-[11px] text-red-300">
-                            要全角コロン
+                    {cursorPosition &&
+                    line.position <= cursorPosition &&
+                    cursorPosition <= line.position + line.text.str.length ? (
+                        <div className="relative clear-right mx-5 my-2 w-[335px] p-2 text-center text-sm leading-normal text-white">
+                            {markupTextWithTypeError(line.text)}
                         </div>
-                    </div>
+                    ) : (
+                        <div className="relative clear-right mx-5 my-2 w-[335px] bg-red-500/50 p-2 text-center text-sm leading-normal text-white">
+                            {markupTextWithTypeError(line.text)}
+                            <div className="text-[11px] text-red-300">
+                                要全角コロン
+                            </div>
+                        </div>
+                    )}
                 </Container>
             )
     }

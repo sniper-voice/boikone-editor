@@ -2,13 +2,14 @@ import { ScenarioText, Line } from './models'
 import { testCharacterCount } from './testCharacterCount'
 import { testCharacterType } from './testCharacterType'
 
-type ReduceResult = {
-    prevCharacter: string | null
-    scenarioText: Line[]
-}
-
-function splitLine(rawLine: string): Line {
-    const [first, second] = rawLine.split('：', 2)
+function splitLine({
+    line,
+    position,
+}: {
+    line: string
+    position: number
+}): Line {
+    const [first, second] = line.split('：', 2)
     if (second === undefined) {
         return {
             type: 'no_colon',
@@ -22,6 +23,7 @@ function splitLine(rawLine: string): Line {
                 ],
                 characterTypeErrors: [],
             },
+            position,
         }
     }
 
@@ -51,11 +53,17 @@ function splitLine(rawLine: string): Line {
 }
 
 export function parseText(text: string): ScenarioText {
+    let positionCounter = 0
     return (
         text
             .split('\n')
+            .reduce<{ line: string; position: number }[]>((acc, curr) => {
+                acc.push({ line: curr, position: positionCounter })
+                positionCounter += curr.length + 1 // line + '\n'
+                return acc
+            }, [])
             // Boikone just ignores empty lines
-            .filter((line) => {
+            .filter(({ line }) => {
                 return line.length > 0
             })
             .map(splitLine)
@@ -114,7 +122,7 @@ export function parseText(text: string): ScenarioText {
                         }
                 }
 
-                throw 'unrecognized line type'
+                throw Error('unrecognized line type')
             })
     )
 }

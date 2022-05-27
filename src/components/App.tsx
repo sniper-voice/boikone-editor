@@ -18,7 +18,9 @@ type Props = {
 }
 
 export function App({ defaultState, onStateChange }: Props) {
-    const [text, setText] = useState<string>(defaultState.text)
+    const [[text, cursorPosition], setTextAndCursorPosition] = useState<
+        [string, number | null]
+    >([defaultState.text, null])
     const scenarioText = useMemo(() => parseText(text), [text])
     const [showStats, setShowStats] = useState<boolean>(false)
     const characterCounts = useMemo(
@@ -91,8 +93,11 @@ export function App({ defaultState, onStateChange }: Props) {
                         <div className="h-[calc(100%-theme(spacing.14)-theme(spacing.12))]">
                             <Edit
                                 text={text}
-                                onTextChange={(text) => {
-                                    setText(text)
+                                onTextChange={(text, cursorPosition) => {
+                                    setTextAndCursorPosition([
+                                        text,
+                                        cursorPosition,
+                                    ])
                                     onStateChange({
                                         type: 'text',
                                         value: text,
@@ -104,7 +109,10 @@ export function App({ defaultState, onStateChange }: Props) {
                             <Footer />
                         </div>
                     </div>
-                    <Preview scenarioText={scenarioText} />
+                    <Preview
+                        scenarioText={scenarioText}
+                        cursorPosition={cursorPosition}
+                    />
                 </Split>
             </div>
         </>

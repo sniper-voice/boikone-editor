@@ -1,12 +1,13 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { ScenarioText } from '../lib/models'
 import { Line } from './Line'
 
 type Props = {
     scenarioText: ScenarioText
+    cursorPosition: number | null
 }
 
-export function Preview({ scenarioText }: Props) {
+export function Preview({ scenarioText, cursorPosition }: Props) {
     return (
         <div className="flex h-full items-center justify-center bg-slate-900">
             <div
@@ -17,7 +18,11 @@ export function Preview({ scenarioText }: Props) {
                     <div className="pointer-events-none absolute h-[666px] w-[375px] bg-slate-900/50"></div>
                     <div className="absolute h-full w-[375px] overflow-y-auto overflow-x-hidden pt-6">
                         {scenarioText.map((line, lineIndex) => (
-                            <Line key={lineIndex} line={line} />
+                            <Line
+                                key={lineIndex}
+                                line={line}
+                                cursorPosition={cursorPosition}
+                            />
                         ))}
                     </div>
                 </div>

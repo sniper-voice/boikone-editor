@@ -34,6 +34,7 @@ export type NoColonLine = ReadonlyDeep<{
         noColonErrors: ErrorRange[]
         characterTypeErrors: ErrorRange[]
     }
+    position: number
 }>
 
 export type Line = NarrativeLine | DialogueLine | NoColonLine
