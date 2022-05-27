@@ -6,6 +6,11 @@ const fixtures = [
         errorRanges: [],
     },
     {
+        // Boikone permits tabs
+        text: 'なんなんだろ\tうねぇこの状況',
+        errorRanges: [],
+    },
+    {
         text: 'abcde',
         errorRanges: [
             {
