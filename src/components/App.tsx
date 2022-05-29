@@ -144,7 +144,16 @@ export function App({ defaultState, onStateChange }: Props) {
                                     ])
                                 }}
                                 onMinusClick={() => {
-                                    if (scenes.length >= 2) {
+                                    if (scenes.length == 1) {
+                                        return
+                                    }
+
+                                    if (
+                                        currentScene.text.length == 0 ||
+                                        window.confirm(
+                                            `${currentScene.title}を削除していいですか?`
+                                        )
+                                    ) {
                                         setScenes(
                                             scenes.filter(
                                                 (scene, index) =>
