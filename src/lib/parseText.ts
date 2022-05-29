@@ -1,4 +1,4 @@
-import { ScenarioText, Line } from './models'
+import { Lines, Line } from './models'
 import { testCharacterCount } from './testCharacterCount'
 import { testCharacterType } from './testCharacterType'
 
@@ -52,7 +52,7 @@ function splitLine({
     }
 }
 
-export function parseText(text: string): ScenarioText {
+export function parseText(text: string): Lines {
     let positionCounter = 0
     return (
         text

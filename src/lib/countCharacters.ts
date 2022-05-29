@@ -1,12 +1,7 @@
-import {
-    ScenarioText,
-    CharacterCounts,
-    NarrativeLine,
-    DialogueLine,
-} from './models'
+import { Lines, CharacterCounts, NarrativeLine, DialogueLine } from './models'
 
-export function countCharacters(scenarioText: ScenarioText): CharacterCounts {
-    return scenarioText
+export function countCharacters(lines: Lines): CharacterCounts {
+    return lines
         .filter(
             (line): line is NarrativeLine | DialogueLine =>
                 line.type === 'dialogue' || line.type === 'narrative'

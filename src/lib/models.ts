@@ -38,14 +38,21 @@ export type NoColonLine = ReadonlyDeep<{
 }>
 
 export type Line = NarrativeLine | DialogueLine | NoColonLine
-
-export type ScenarioText = Readonly<Line[]>
+export type Lines = Readonly<Line[]>
 
 export type CharacterCount = {
     readonly character: string // 0 means `narrative`
     readonly count: number
 }
-
 export type CharacterCounts = Readonly<CharacterCount[]>
 
 export type CountByCharacter = Record<string, number>
+
+export type Scene = {
+    readonly id: string
+    readonly title: string
+    readonly text: string
+    readonly cursorPosition: number | null
+    readonly lines: Lines
+    readonly characterCounts: CharacterCounts
+}
