@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Split } from '@geoffcox/react-splitter'
-import { Scene, CursorPosition } from '../lib/models'
+import { Scene, CursorPosition, SavedScene } from '../lib/models'
 import { parseText } from '../lib/parseText'
 import { countCharacters } from '../lib/countCharacters'
 import { aggregateCountByCharacter } from '../lib/aggregateCountByCharacter'
@@ -12,50 +12,47 @@ import { Footer } from './Footer'
 import { Stats } from './Stats'
 import { WordsDistribution } from './WordsDistribution'
 
+export type StateChanges =
+    | {
+          type: 'updateScene'
+          payload: {
+              sceneId: string
+              title: string
+              text: string
+          }
+      }
+    | {
+          type: 'deleteScene'
+          payload: {
+              sceneId: string
+          }
+      }
+
 type Props = {
     defaultState: {
-        text: string
+        scenes: [SavedScene, ...SavedScene[]]
     }
-    onStateChange: (payload: { type: 'text'; value: string }) => void
+    onStateChange: (change: StateChanges) => void
 }
 
-const initialText = `0：薄暗い部屋に青白く光るキーボードとモニター。打鍵音が響き渡る
-男：ふっふっふ、ついに完成したのでスナ、名付けて「ボイコネプレビュー」
-助手：ボ、ボイコネプレビュー？これはいったいなんなのですか？
-助手：　
-0：モニターを向いたまま話し続ける男
-男：きみもシナリオライターのはしくれなら知っているでしょう。ボイコネでシナリオを投稿するときには、まず台本を書いたテキストファイルを作成し、そしてボイコネサイトからファイルを選択する。そうでスナ？
-助手：はい
-男：では、書き上がったシナリオの実際の見た目確認するときには？
-助手：ファイルを選択後にプレビューボタンを押します・・・
-男：ふむ。しかし人間とは往々にして過ちを犯すもの。きみはプレビューでキャラクター名の不備や、改行不足など修正すべき点を見つけるでしょう。さて、どうしまスナ？
-助手：ローカルのテキストファイルを修正・保存して・・・再度選択・・・です・・・
-助手：　
-0：興奮した様子で助手に振り向き、男が立ち上がる
-男：そう！そのとおり！
-男：現状のボイコネ仕様ではこの修正・確認の反復作業が極めてめんどくさい！演者の読みやすいシナリオを作るためには、実際に近い環境でどのように表示されるか確認しながらの調整は、きわめて重要！
-助手：たしかに・・・
-男：そこでこのボイコネプレビューの登場です。これを使えば、１文字修正するごとに即座にプレビューに反映されまスナ
-助手：作業効率爆上がり・・・(ゴクリ
-助手：す、すごいじゃないですか！
-男：ただし注意点もある。テキストは、あくまでブラウザ内にローカル保存されまスナ。他のＰＣに移すときなどはエディタからコピペしてファイル保存などしていただきたい
-助手：クラウドに自動保存されたりとかはないんですか？
-男：現状はありません。あくまでシナリオテキストをプレビューするだけのシンプルなものでスナ
-助手：よくわかりました。さっそくこれを使ってシナリオを書いてみたいと思います
-男：うむ。使い勝手に関するフィードバックや不具合報告などがあれば、 @sniper_voice に知らせて欲しいのでスナ`
-const initialLines = parseText(initialText)
-const initialCharacterCounts = countCharacters(initialLines)
+function buildScene(savedScene: SavedScene): Scene {
+    const lines = parseText(savedScene.text)
+    const characterCounts = countCharacters(lines)
+    return {
+        id: savedScene.sceneId,
+        title: savedScene.title,
+        text: savedScene.text,
+        lines,
+        characterCounts,
+    }
+}
 
 export function App({ defaultState, onStateChange }: Props) {
-    const [scenes, setScenes] = useState<[Scene, ...Scene[]]>([
-        {
-            id: 'scene1',
-            title: 'シーン1',
-            text: initialText,
-            lines: initialLines,
-            characterCounts: initialCharacterCounts,
-        },
-    ])
+    const initialScenes = useMemo(
+        () => defaultState.scenes.map(buildScene) as [Scene, ...Scene[]],
+        [defaultState.scenes]
+    )
+    const [scenes, setScenes] = useState<[Scene, ...Scene[]]>(initialScenes)
     const [cursorPosition, setCursorPosition] = useState<CursorPosition | null>(
         null
     )
@@ -132,34 +129,47 @@ export function App({ defaultState, onStateChange }: Props) {
                                     setCursorPosition(null)
                                 }}
                                 onPlusClick={() => {
-                                    setScenes([
-                                        ...scenes,
-                                        {
-                                            id: `scene${scenes.length + 1}`,
-                                            title: `シーン${scenes.length + 1}`,
-                                            text: '',
-                                            lines: [],
-                                            characterCounts: [],
+                                    const newScene = {
+                                        id: `scene${scenes.length + 1}`,
+                                        title: `シーン${scenes.length + 1}`,
+                                        text: '',
+                                        lines: [],
+                                        characterCounts: [],
+                                    }
+                                    setScenes([...scenes, newScene])
+                                    onStateChange({
+                                        type: 'updateScene',
+                                        payload: {
+                                            sceneId: newScene.id,
+                                            title: newScene.title,
+                                            text: newScene.text,
                                         },
-                                    ])
+                                    })
                                 }}
                                 onMinusClick={() => {
-                                    if (scenes.length == 1) {
+                                    if (scenes.length === 1) {
                                         return
                                     }
 
+                                    const lastScene = scenes[scenes.length - 1]
                                     if (
-                                        currentScene.text.length == 0 ||
+                                        lastScene.text.length === 0 ||
                                         window.confirm(
                                             `${currentScene.title}を削除していいですか?`
                                         )
                                     ) {
                                         setScenes(
                                             scenes.filter(
-                                                (scene, index) =>
-                                                    index !== scenes.length - 1
+                                                (scene) =>
+                                                    scene.id !== lastScene.id
                                             ) as [Scene, ...Scene[]]
                                         )
+                                        onStateChange({
+                                            type: 'deleteScene',
+                                            payload: {
+                                                sceneId: lastScene.id,
+                                            },
+                                        })
                                     }
                                 }}
                             />
@@ -194,8 +204,12 @@ export function App({ defaultState, onStateChange }: Props) {
                                             : null
                                     )
                                     onStateChange({
-                                        type: 'text',
-                                        value: text,
+                                        type: 'updateScene',
+                                        payload: {
+                                            sceneId: currentSceneId,
+                                            title: currentScene.title,
+                                            text,
+                                        },
                                     })
                                 }}
                             />

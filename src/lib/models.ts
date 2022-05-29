@@ -60,3 +60,9 @@ export type CursorPosition = {
     readonly position: number
     readonly sceneId: string
 }
+
+export type SavedScene = {
+    sceneId: string
+    title: string
+    text: string
+}

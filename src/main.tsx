@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { getMany, set } from 'idb-keyval'
-import { App } from './components/App'
+import { entries, set, del, clear } from 'idb-keyval'
+import { App, StateChanges } from './components/App'
+import { SavedScene } from './lib/models'
 
 const initialText = `0：薄暗い部屋に青白く光るキーボードとモニター。打鍵音が響き渡る
 男：ふっふっふ、ついに完成したのでスナ、名付けて「ボイコネプレビュー」
@@ -29,36 +30,66 @@ const initialText = `0：薄暗い部屋に青白く光るキーボードとモ�
 男：うむ。使い勝手に関するフィードバックや不具合報告などがあれば、 @sniper_voice に知らせて欲しいのでスナ`
 
 export function main() {
-    getMany(['text']).then(
-        ([persistedText, persistedPosition, persistedSize]) => {
-            const defaultState = {
-                text: persistedText ?? initialText,
-            }
-
-            const onStateChange = (payload: {
-                type: 'text'
-                value: string
-            }) => {
-                set(payload.type, payload.value)
-            }
-
-            ReactDOM.render(
-                <React.StrictMode>
-                    <App
-                        defaultState={defaultState}
-                        onStateChange={onStateChange}
-                    />
-                </React.StrictMode>,
-                document.getElementById('root')
-            )
+    const onStateChange = (change: StateChanges) => {
+        switch (change.type) {
+            case 'updateScene':
+                set(change.payload.sceneId, {
+                    title: change.payload.title,
+                    text: change.payload.text,
+                })
+                break
+            case 'deleteScene':
+                del(change.payload.sceneId)
+                break
         }
-    )
+    }
+
+    entries().then((entries) => {
+        const restoredScenes = entries
+            .filter(([key]) => /^scene\d+$/.test(key.toString()))
+            .map(([key, value]) => ({
+                sceneId: key.toString(),
+                title: value.title,
+                text: value.text,
+            }))
+            .filter(
+                (element): element is SavedScene =>
+                    typeof element.sceneId === 'string' &&
+                    typeof element.title === 'string' &&
+                    typeof element.text === 'string'
+            )
+        const defaultState = {
+            scenes: (restoredScenes.length > 0
+                ? restoredScenes
+                : [
+                      {
+                          sceneId: 'scene1',
+                          title: 'シーン1',
+                          text: initialText,
+                      },
+                  ]) as [SavedScene, ...SavedScene[]],
+        }
+
+        ReactDOM.render(
+            <React.StrictMode>
+                <App
+                    defaultState={defaultState}
+                    onStateChange={onStateChange}
+                />
+            </React.StrictMode>,
+            document.getElementById('root')
+        )
+    })
 }
 
 declare global {
     var resetBoikonePreview: () => void
 }
 window.resetBoikonePreview = async () => {
-    await set('text', initialText)
+    await clear()
+    await set('scene1', {
+        title: 'シーン1',
+        text: initialText,
+    })
     window.location.reload()
 }

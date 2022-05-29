@@ -6,7 +6,13 @@ test('It renders text when the value of textarea is changed', () => {
     const app = render(
         <App
             defaultState={{
-                text: '',
+                scenes: [
+                    {
+                        sceneId: 'scene1',
+                        title: 'シーン1',
+                        text: '',
+                    },
+                ],
             }}
             onStateChange={() => {}}
         />
