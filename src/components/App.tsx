@@ -60,6 +60,7 @@ export function App({ defaultState, onStateChange }: Props) {
     const currentScene =
         scenes.find((scene) => scene.id === currentSceneId) || scenes[0]
     const [showStats, setShowStats] = useState<boolean>(false)
+    // TODO: aggregateCountByCharacter should be moved to the `Stats` component
     const characterCounts = scenes.map((scene) => scene.characterCounts).flat()
     const charactersSortedByCount = Object.entries(
         aggregateCountByCharacter(characterCounts)
@@ -113,7 +114,17 @@ export function App({ defaultState, onStateChange }: Props) {
                                 showStats ? 'visible' : 'invisible'
                             }`}
                         >
-                            <Stats entries={entries} />
+                            <Stats
+                                totalCount={scenes.reduce(
+                                    (count, scene) =>
+                                        (count += scene.text.replaceAll(
+                                            '\n',
+                                            ''
+                                        ).length),
+                                    0
+                                )}
+                                entries={entries}
+                            />
                         </div>
                         <div className="h-14">
                             <Header
