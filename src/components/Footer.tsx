@@ -2,7 +2,11 @@ import React from 'react'
 
 export function Footer() {
     return (
-        <div className="flex h-full items-center justify-end bg-black pr-3 text-sm text-gray-400">
+        <div className="flex h-full items-center bg-black px-3 text-sm text-gray-400">
+            <a href="?mode=classic" className="">
+                旧版
+            </a>
+            <span className="grow" />
             <span>
                 wwww.boikone-preview.com created by{' '}
                 <a
