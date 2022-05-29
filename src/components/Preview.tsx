@@ -1,9 +1,10 @@
 import React from 'react'
-import { Scene as SceneData, Lines } from '../lib/models'
+import { Scene as SceneData, Lines, CursorPosition } from '../lib/models'
 import { Line } from './Line'
 
 type Props = {
     scenes: SceneData[]
+    cursorPosition: CursorPosition | null
 }
 
 function Scene({
@@ -26,7 +27,7 @@ function Scene({
     )
 }
 
-export function Preview({ scenes }: Props) {
+export function Preview({ scenes, cursorPosition }: Props) {
     return (
         <div className="flex h-full items-center justify-center bg-slate-900">
             <div
@@ -40,7 +41,12 @@ export function Preview({ scenes }: Props) {
                             <Scene
                                 key={scene.id}
                                 lines={scene.lines}
-                                cursorPosition={scene.cursorPosition}
+                                cursorPosition={
+                                    cursorPosition &&
+                                    cursorPosition.sceneId === scene.id
+                                        ? cursorPosition.position
+                                        : null
+                                }
                             />
                         ))}
                     </div>

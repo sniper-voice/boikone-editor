@@ -52,7 +52,11 @@ export type Scene = {
     readonly id: string
     readonly title: string
     readonly text: string
-    readonly cursorPosition: number | null
     readonly lines: Lines
     readonly characterCounts: CharacterCounts
+}
+
+export type CursorPosition = {
+    readonly position: number
+    readonly sceneId: string
 }

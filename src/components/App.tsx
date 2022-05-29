@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Split } from '@geoffcox/react-splitter'
-import { Scene } from '../lib/models'
+import { Scene, CursorPosition } from '../lib/models'
 import { parseText } from '../lib/parseText'
 import { countCharacters } from '../lib/countCharacters'
 import { aggregateCountByCharacter } from '../lib/aggregateCountByCharacter'
@@ -52,11 +52,13 @@ export function App({ defaultState, onStateChange }: Props) {
             id: 'scene1',
             title: 'シーン1',
             text: initialText,
-            cursorPosition: null,
             lines: initialLines,
             characterCounts: initialCharacterCounts,
         },
     ])
+    const [cursorPosition, setCursorPosition] = useState<CursorPosition | null>(
+        null
+    )
     const [currentSceneId, setCurrentSceneId] = useState<string>(scenes[0].id)
     const currentScene =
         scenes.find((scene) => scene.id === currentSceneId) || scenes[0]
@@ -127,6 +129,7 @@ export function App({ defaultState, onStateChange }: Props) {
                                 currentTab={currentSceneId}
                                 onTabClick={(id) => {
                                     setCurrentSceneId(id)
+                                    setCursorPosition(null)
                                 }}
                                 onPlusClick={() => {
                                     setScenes([
@@ -135,7 +138,6 @@ export function App({ defaultState, onStateChange }: Props) {
                                             id: `scene${scenes.length + 1}`,
                                             title: `シーン${scenes.length + 1}`,
                                             text: '',
-                                            cursorPosition: null,
                                             lines: [],
                                             characterCounts: [],
                                         },
@@ -168,12 +170,19 @@ export function App({ defaultState, onStateChange }: Props) {
                                                 ? {
                                                       ...scene,
                                                       text,
-                                                      cursorPosition,
                                                       lines,
                                                       characterCounts,
                                                   }
                                                 : scene
                                         ) as [Scene, ...Scene[]]
+                                    )
+                                    setCursorPosition(
+                                        cursorPosition
+                                            ? {
+                                                  position: cursorPosition,
+                                                  sceneId: currentSceneId,
+                                              }
+                                            : null
                                     )
                                     onStateChange({
                                         type: 'text',
@@ -186,7 +195,7 @@ export function App({ defaultState, onStateChange }: Props) {
                             <Footer />
                         </div>
                     </div>
-                    <Preview scenes={scenes} />
+                    <Preview scenes={scenes} cursorPosition={cursorPosition} />
                 </Split>
             </div>
         </>
