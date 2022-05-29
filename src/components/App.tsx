@@ -110,7 +110,7 @@ export function App({ defaultState, onStateChange }: Props) {
                 <Split initialPrimarySize="40%">
                     <div className="relative h-full">
                         <div
-                            className={`absolute right-2 top-16 ${
+                            className={`absolute right-2 top-16 z-10 ${
                                 showStats ? 'visible' : 'invisible'
                             }`}
                         >
