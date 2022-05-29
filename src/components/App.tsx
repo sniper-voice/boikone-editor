@@ -10,7 +10,7 @@ import { Tabs } from './Tabs'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { Stats } from './Stats'
-import { WordsDistribution } from './WordsDistribution'
+//import { WordsDistribution } from './WordsDistribution'
 
 export type StateChanges =
     | {
