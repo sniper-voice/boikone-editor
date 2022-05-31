@@ -1,6 +1,7 @@
 {
     "name": "boikone-preview",
     "version": "0.1.0",
+    "license": "MIT",
     "private": true,
     "dependencies": {
         "@geoffcox/react-splitter": "^2.1.1",
