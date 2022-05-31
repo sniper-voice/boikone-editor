@@ -11,6 +11,7 @@ const fixtures = [
         errorRanges: [],
     },
     {
+        // Boikone denies ASCII alphabet
         text: 'abcde',
         errorRanges: [
             {
@@ -27,6 +28,11 @@ const fixtures = [
                 length: 5,
             },
         ],
+    },
+    {
+        // Boikone permites ASCII numberic
+        text: '0123456789',
+        errorRanges: [],
     },
     {
         // Surrogate pair

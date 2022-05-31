@@ -1,7 +1,7 @@
 import { ErrorRange } from './models'
 
 export function testCharacterType(text: string): ErrorRange[] {
-    const invalidCharacters = /[ -/:-@[-~a-zA-Z1-9\uD800-\uDBFF\uDC00-\uDFFF]+/g
+    const invalidCharacters = /[ -/:-@[-~a-zA-Z\uD800-\uDBFF\uDC00-\uDFFF]+/g
 
     const errors: ErrorRange[] = []
 
