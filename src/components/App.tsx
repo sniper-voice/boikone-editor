@@ -158,7 +158,7 @@ export function App({ defaultState, onStateChange }: Props) {
                                     })
                                 }}
                                 onMinusClick={() => {
-                                    if (scenes.length === 1) {
+                                    if (scenes.length <= 1) {
                                         return
                                     }
 
@@ -175,6 +175,13 @@ export function App({ defaultState, onStateChange }: Props) {
                                                     scene.id !== lastScene.id
                                             ) as [Scene, ...Scene[]]
                                         )
+                                        if (currentSceneId === lastScene.id) {
+                                            setCurrentSceneId(
+                                                scenes[scenes.length - 2].id
+                                            )
+                                            setCursorPosition(null)
+                                        }
+
                                         onStateChange({
                                             type: 'deleteScene',
                                             payload: {
