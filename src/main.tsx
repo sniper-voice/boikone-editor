@@ -67,8 +67,13 @@ export async function main() {
                 typeof element.text === 'string'
         )
 
-    if (restoredScenes.length === 0) {
-        restoredScenes.push(initialScene)
+    // Save the initial scene when no data is found.
+    // Due to a previous bug, there were a case that scene1 doesn't exist while scenes after
+    // that exist. So we find the `scene1` here to fill the lacking entry.
+    if (
+        restoredScenes.find((scene) => scene.sceneId === 'scene1') === undefined
+    ) {
+        restoredScenes.unshift(initialScene)
         await setScene(initialScene)
     }
 
