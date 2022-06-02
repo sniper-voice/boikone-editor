@@ -4,7 +4,10 @@ import { entries, set, del, clear } from 'idb-keyval'
 import { App, StateChanges } from './components/App'
 import { SavedScene } from './lib/models'
 
-const initialText = `0：薄暗い部屋に青白く光るキーボードとモニター。打鍵音が響き渡る
+const initialScene = {
+    sceneId: 'scene1',
+    title: 'シーン1',
+    text: `0：薄暗い部屋に青白く光るキーボードとモニター。打鍵音が響き渡る
 男：ふっふっふ、ついに完成したのでスナ、名付けて「ボイコネプレビュー」
 助手：ボ、ボイコネプレビュー？これはいったいなんなのですか？
 助手：　
@@ -27,9 +30,15 @@ const initialText = `0：薄暗い部屋に青白く光るキーボードとモ�
 助手：クラウドに自動保存されたりとかはないんですか？
 男：現状はありません。あくまでシナリオテキストをプレビューするだけのシンプルなものでスナ
 助手：よくわかりました。さっそくこれを使ってシナリオを書いてみたいと思います
-男：うむ。使い勝手に関するフィードバックや不具合報告などがあれば、 @sniper_voice に知らせて欲しいのでスナ`
+男：うむ。使い勝手に関するフィードバックや不具合報告などがあれば、 @sniper_voice に知らせて欲しいのでスナ`,
+}
 
-export function main() {
+async function setScene(scene: SavedScene): Promise<void> {
+    const { sceneId, ...remainingParams } = scene
+    await set(sceneId, remainingParams)
+}
+
+export async function main() {
     const onStateChange = (change: StateChanges) => {
         switch (change.type) {
             case 'updateScene':
@@ -44,42 +53,35 @@ export function main() {
         }
     }
 
-    entries().then((entries) => {
-        const restoredScenes = entries
-            .filter(([key]) => /^scene\d+$/.test(key.toString()))
-            .map(([key, value]) => ({
-                sceneId: key.toString(),
-                title: value.title,
-                text: value.text,
-            }))
-            .filter(
-                (element): element is SavedScene =>
-                    typeof element.sceneId === 'string' &&
-                    typeof element.title === 'string' &&
-                    typeof element.text === 'string'
-            )
-        const defaultState = {
-            scenes: (restoredScenes.length > 0
-                ? restoredScenes
-                : [
-                      {
-                          sceneId: 'scene1',
-                          title: 'シーン1',
-                          text: initialText,
-                      },
-                  ]) as [SavedScene, ...SavedScene[]],
-        }
-
-        ReactDOM.render(
-            <React.StrictMode>
-                <App
-                    defaultState={defaultState}
-                    onStateChange={onStateChange}
-                />
-            </React.StrictMode>,
-            document.getElementById('root')
+    const restoredScenes = (await entries())
+        .filter(([key]) => /^scene\d+$/.test(key.toString()))
+        .map(([key, value]) => ({
+            sceneId: key.toString(),
+            title: value.title,
+            text: value.text,
+        }))
+        .filter(
+            (element): element is SavedScene =>
+                typeof element.sceneId === 'string' &&
+                typeof element.title === 'string' &&
+                typeof element.text === 'string'
         )
-    })
+
+    if (restoredScenes.length === 0) {
+        restoredScenes.push(initialScene)
+        await setScene(initialScene)
+    }
+
+    const defaultState = {
+        scenes: restoredScenes as [SavedScene, ...SavedScene[]],
+    }
+
+    ReactDOM.render(
+        <React.StrictMode>
+            <App defaultState={defaultState} onStateChange={onStateChange} />
+        </React.StrictMode>,
+        document.getElementById('root')
+    )
 }
 
 declare global {
@@ -87,9 +89,6 @@ declare global {
 }
 window.resetBoikonePreview = async () => {
     await clear()
-    await set('scene1', {
-        title: 'シーン1',
-        text: initialText,
-    })
+    await setScene(initialScene)
     window.location.reload()
 }
