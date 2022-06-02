@@ -7,7 +7,7 @@ export function Footer() {
                 旧版
             </a>
             <span>
-                背景画像:<a href="https://min-chi.material.jp/">みりんちえ</a>
+                背景画像:<a href="https://min-chi.material.jp/">みんちりえ</a>
             </span>
             <span className="grow" />
             <span>
